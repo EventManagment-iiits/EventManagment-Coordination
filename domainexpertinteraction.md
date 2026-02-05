@@ -9,7 +9,7 @@ Duration (in-minutes): 45
 
 ## Domain Expert Details
 Role/designation: Event Coordinator  
-Experience in the domain: 6 years managing academic and cultural events  
+Experience in the domain: 1 years managing academic and cultural events  
 Nature of work: Operational & Administrative  
 
 ## Domain Context and Terminology
