@@ -1,6 +1,67 @@
-Event: A planned organized activity
-Attendee: A person who participates in an event
-Organizer: Person responsible for managing events
-Venue: Location where event is conducted
-Resource: Equipment or facilities required for an event
-Staff: Personnel assigned to support event execution
+Actor: A user or external system that interacts with the platform (Organizer, Attendee, Staff, Admin).
+
+Admin: The system administrator responsible for managing venues, resources, staff details, and system configurations.
+
+Analytics: Statistical analysis of event performance, attendance, and participation data.
+
+Attendance: The record of an attendee’s presence at an event.
+
+Attendee: A person who registers for and participates in an event.
+
+Authentication: The process of verifying a user’s identity before granting system access.
+
+Availability: The system’s ability to remain accessible to users at all times (e.g., 24/7 access).
+
+Capacity: The maximum number of attendees allowed for an event.
+
+Coordinator: A staff member responsible for monitoring and updating event execution status.
+
+Double-Booking: A scheduling conflict where the same venue or resource is assigned to multiple events at the same time.
+
+Event: A planned organized activity such as a seminar, workshop, fest, or cultural program.
+
+Event Management Module: The component responsible for event creation, scheduling, and modification.
+
+Execution Status: Real-time progress updates of an event during its execution phase.
+
+Integrity: Assurance that system data remains accurate, consistent, and conflict-free.
+
+Institutional Database: An external database used for verifying users and checking venue or resource availability.
+
+Notification Service: An external service used to send event updates via email or SMS.
+
+Organizer: The person responsible for planning, creating, and managing events.
+
+Performance: The system’s ability to handle multiple concurrent users and high registration loads efficiently.
+
+Registration: The process by which an attendee enrolls for an event.
+
+Registration Module: The component responsible for handling attendee registrations and validating event capacity.
+
+Reliability: The system’s ability to consistently maintain accurate records of attendance and resource usage.
+
+Report: A generated summary of event-related data such as attendance, resource usage, and execution status.
+
+Reporting Module: The component responsible for generating event performance and attendance reports.
+
+Resource: Equipment or facilities required for conducting an event.
+
+Resource & Venue Module: The component responsible for managing venue allocation and resource availability.
+
+Schedule: The assigned date and time for conducting an event.
+
+Security: Protection of system and user data from unauthorized access or breaches.
+
+Sequence Diagram: A UML diagram showing interactions between system components in time sequence.
+
+Staff: Personnel assigned to support event execution and coordination.
+
+System Architecture: The structural design of the platform consisting of multiple functional modules.
+
+User Management Module: The component responsible for handling user authentication and role management.
+
+Use Case: A description of how a user interacts with the system to accomplish a specific task.
+
+Venue: The physical location where the event is conducted.
+
+Activity Diagram: A UML diagram representing the workflow of actions within the system.
