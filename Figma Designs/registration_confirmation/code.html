@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registration Confirmed | UniEvents</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 md:px-10 py-3">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">UniEvents</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-primary text-sm font-bold" href="#">My Events</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">Browse</a>
+</nav>
+<div class="bg-slate-200 dark:bg-slate-700 bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Student profile picture headshot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCkcJVW-XftslgOmv2PmKrOV0ij1GHzQRRAY-xOq0e2N-DzBKBfJVBTatdN3aT8R5YYzMzD4f0B27f8c0jfudJmsEcMq5XDTTsHl4tFfmT3R-6vEzZOWXAOlNaryLP-Yie4PJO86cr6AR3nEd3FWdUwQQ-fNjQ7uo3l-Fl6cscK2JlySEjSCwyRtbEv3ZBF1yFsTJt7_jJBIh-actoqq6rTSQMIc58KWGDSzTuAvV3aECvk3cNIk-k86_Fps0zyLu0deiOsBs0SoBI")'>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center py-10 px-4 md:px-0">
+<div class="max-w-4xl w-full space-y-8">
+<!-- Success State Header -->
+<div class="flex flex-col items-center text-center space-y-4">
+<div class="size-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined !text-5xl">check_circle</span>
+</div>
+<div class="space-y-2">
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Registration Confirmed!</h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg max-w-xl mx-auto">
+                            Thank you, Alex. Your spot is secured for the Annual Tech Symposium. We've sent a confirmation email to your university address.
+                        </p>
+</div>
+</div>
+<!-- Main Confirmation Card -->
+<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-800 grid md:grid-cols-5">
+<!-- QR / Ticket Section -->
+<div class="md:col-span-2 bg-slate-50 dark:bg-slate-800/50 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800">
+<div class="bg-white p-4 rounded-xl shadow-inner mb-6">
+<div class="size-48 bg-slate-100 flex items-center justify-center border-2 border-dashed border-slate-300 rounded-lg">
+<span class="material-symbols-outlined text-slate-400 !text-6xl">qr_code_2</span>
+</div>
+</div>
+<div class="text-center space-y-1">
+<p class="text-xs font-bold uppercase tracking-widest text-slate-400">Registration ID</p>
+<p class="text-xl font-mono font-bold text-primary">UE-2024-ATS-9921</p>
+</div>
+<button class="mt-8 flex items-center gap-2 px-6 py-2 bg-primary/10 text-primary rounded-lg font-semibold hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">download</span>
+                            Download Ticket
+                        </button>
+</div>
+<!-- Event Details Section -->
+<div class="md:col-span-3 p-8 flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                                University Event
+                            </div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Annual Tech Symposium 2024</h2>
+<div class="space-y-3 pt-2">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<div>
+<p class="font-semibold text-slate-800 dark:text-slate-200">Friday, October 25th, 2024</p>
+<p class="text-sm text-slate-500">10:00 AM - 4:00 PM (EDT)</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div>
+<p class="font-semibold text-slate-800 dark:text-slate-200">Main Auditorium, Science Block Annex</p>
+<p class="text-sm text-slate-500">Innovation Way, North Campus</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">person</span>
+<div>
+<p class="font-semibold text-slate-800 dark:text-slate-200">Alex Johnson</p>
+<p class="text-sm text-slate-500">Computer Science Department</p>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-3">
+<button class="flex-1 flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">event</span>
+                                Add to Calendar
+                            </button>
+<button class="flex-1 flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-6 py-3 rounded-xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">list_alt</span>
+                                View My Events
+                            </button>
+</div>
+</div>
+</div>
+<!-- Venue Map & Help Section -->
+<div class="grid md:grid-cols-2 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-lg">Venue Location</h3>
+<button class="text-primary text-sm font-semibold hover:underline">Open in Maps</button>
+</div>
+<div class="h-40 rounded-xl bg-slate-200 dark:bg-slate-800 relative overflow-hidden bg-cover bg-center" data-alt="Campus map highlighting science block annex" data-location="University Campus" style='background-image: url("https://placeholder.pics/svg/300")'>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<div class="bg-white dark:bg-slate-900 p-2 rounded-full shadow-lg border-2 border-primary">
+<span class="material-symbols-outlined text-primary">location_on</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col justify-center">
+<div class="space-y-4">
+<div class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">help_center</span>
+</div>
+<div>
+<h3 class="font-bold text-lg">Need Assistance?</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">If you have any questions regarding the symposium or your registration, please contact the event coordination team.</p>
+</div>
+<a class="inline-flex items-center gap-2 text-primary font-semibold hover:underline" href="mailto:events@university.edu">
+<span class="material-symbols-outlined !text-sm">mail</span>
+                                events@university.edu
+                            </a>
+</div>
+</div>
+</div>
+<!-- Footer Navigation -->
+<div class="pt-10 flex justify-center">
+<a class="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-medium" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+                        Back to Events Listing
+                    </a>
+</div>
+</div>
+</main>
+<footer class="py-8 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-center">
+<p class="text-sm text-slate-500 dark:text-slate-400">© 2024 UniEvents Management System. All rights reserved.</p>
+</footer>
+</div>
+</body></html>

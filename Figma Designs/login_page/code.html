@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "secondary": "#7e22ce",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen flex-col items-center justify-center p-4">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-secondary/10 rounded-full blur-3xl"></div>
+</div>
+<div class="z-10 w-full max-w-[1100px] grid grid-cols-1 lg:grid-cols-2 bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+<div class="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-primary to-secondary text-white relative">
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-12">
+<div class="bg-white/20 p-2 rounded-lg backdrop-blur-md">
+<span class="material-symbols-outlined text-3xl">account_balance</span>
+</div>
+<h1 class="text-2xl font-bold tracking-tight">EMCP</h1>
+</div>
+<h2 class="text-4xl font-extrabold leading-tight mb-6">
+                        Centralized Event <br/> Coordination for <br/> Campus Life.
+                    </h2>
+<p class="text-white/80 text-lg max-w-md">
+                        Join thousands of students and faculty members in organizing, promoting, and attending world-class university events.
+                    </p>
+</div>
+<div class="relative z-10 mt-12 bg-white/10 backdrop-blur-lg p-6 rounded-xl border border-white/20">
+<div class="flex items-center gap-4 mb-4">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-primary" data-alt="University student profile picture avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEZZ_RBrjI6ZIX25OIsfdFptZhmohTSs2XVjSBLC70O-R1M4c4-YSoumqeeNwXA5OihUjrPtDVrziwwflbZswFWWXXhV-0Qq-QyRnmzMpnOpHbbNS2bgyE0inIT_NXzHROLhE6nD2dL2ssISIZa7KcO8RRNUuO1KsKNIFuS1W7ZUrTir8-QA92wVxrsiN3qsee4pCplaz-RHdSkWB3cjSHzcNj-Vvf3KoHYmtUdjvY8JNVjSXQjF5VGDbZmWNu1RgRzRdi2nImXts"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary" data-alt="University staff profile picture avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsKBSCqClqx_wy_EXBjW-g5T75yOGYg4WXpRf2Y7AL1nmawxqrE77gmkqgbIs7eIZqE5GsKD3qFE7IYdrJdTvkrkjFXtlTUd_6j3BIeZ75msYLu5S3OV805im5ggM1uC-0CT9hejSc4Gs0Ae7eLoF4o99-FkkT7hJoUQ0fwxPsReTOQjMeViUbaZbXATLYaELFjylPaBIot3-QLyz146sCv1aF3OKKgYbl9UAlxi76U6MnDH6CDXGwmxVn-6rjFdXoYdm98JbygTU"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary" data-alt="Student club leader profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH3qnQI1AsAgBa6MOoqnJO3At78Qr_4NUfhfS13NWfwZy7Ou1k8nZcLdcmxiN1lrvo67b_7aSvhziL07ygUEVVvEpkXAbaR4z-izyQ7C4JoXDEpDrx3kYbjzESRPCN-ti9iKD-DbiCWWQb51kqj42GTy4jVCxRkulXUu5hUttmHKbG98hCmkcaZoKSAoPcmPnrWbdokBoDWo_MmtAwftCTOX6_VxGh8L34M9ueRT1_qvc4wZpSAEk8h6-cDA4mJBaCFnKI556ZTCk"/>
+</div>
+<span class="text-sm font-medium">Trusted by 50+ campus organizations</span>
+</div>
+</div>
+<div class="absolute inset-0 opacity-20 pointer-events-none" data-alt="Abstract geometric university pattern background">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+</div>
+<div class="flex flex-col p-8 md:p-12 lg:p-16">
+<div class="flex justify-between items-center mb-10 lg:hidden">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined font-bold">account_balance</span>
+<span class="font-bold text-xl">EMCP</span>
+</div>
+<button class="text-sm font-semibold text-slate-500 hover:text-primary transition-colors">Help</button>
+</div>
+<div class="hidden lg:flex justify-end mb-8">
+<button class="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">help</span>
+                        Need help?
+                    </button>
+</div>
+<div class="mb-10">
+<h3 class="text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Welcome Back</h3>
+<p class="text-slate-500 dark:text-slate-400">Sign in to manage your university events</p>
+</div>
+<form class="space-y-6">
+<div>
+<label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">University Email or ID</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">mail</span>
+<input class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="e.g. name@university.edu" type="email"/>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Password</label>
+<a class="text-xs font-bold text-primary hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
+<input class="w-full pl-12 pr-12 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="••••••••" type="password"/>
+<button class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors" type="button">visibility</button>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary" id="remember" type="checkbox"/>
+<label class="text-sm text-slate-600 dark:text-slate-400" for="remember">Keep me signed in</label>
+</div>
+<button class="w-full py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2" type="submit">
+                        Sign In
+                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</form>
+<div class="mt-8 flex flex-col items-center gap-6">
+<div class="relative w-full">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-4 bg-white dark:bg-slate-900 text-slate-500">Or continue with</span>
+</div>
+</div>
+<button class="w-full py-3.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-3">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                        University Single Sign-On (SSO)
+                    </button>
+<p class="text-slate-600 dark:text-slate-400 text-sm">
+                        Don't have an account? 
+                        <a class="text-primary font-bold hover:underline ml-1" href="#">Create an account</a>
+</p>
+</div>
+</div>
+</div>
+<footer class="mt-8 text-slate-400 dark:text-slate-600 text-xs flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Cookie Policy</a>
+<span>© 2024 University EMCP</span>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Organizer Dashboard | UniEvents</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Lexend', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 h-screen flex flex-col">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-tight">UniEvents</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Admin Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span>Events</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person_add</span>
+<span>Registrations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">volunteer_activism</span>
+<span>Volunteers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Reports</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="University admin profile portrait photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR0danu8FzFc7ZnwhiZy0a1fwD1lyOL7TEmIuZTF2RWlMgXfw9JQdgDMYL0vtMv7DdZNN7LJFP3ckeKPBHPeKRw1-D6zMwE9DAEdBJIG9S9NpSCV905hq0ivT2_ZI_-D11xXOmm7lIhJX2flod0R8wCFAbNC64-t0hvMvTlqv15ir5__SvsyPErK29Pv5dnqOxN4hheS_dBJGiHMgWJ-s48fMQGrBNn36E5ttcWOl_eLJcVK24VPaqUFmG7GsyGGfYI1cE081lD7w"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Dr. Alex Smith</p>
+<p class="text-xs text-slate-500 truncate">Senior Organizer</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto">
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 px-8 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-slate-500 dark:text-slate-400">Pages</span>
+<span class="text-slate-300 dark:text-slate-700">/</span>
+<span class="font-medium">Dashboard</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search events..." type="text"/>
+</div>
+<button class="size-10 rounded-full flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-3xl font-bold tracking-tight">Organizer Dashboard</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Manage your upcoming campus events and track registration metrics.</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined">add</span>
+                        Create Event
+                    </button>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">event</span>
+</div>
+<span class="text-emerald-500 text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">arrow_upward</span>
+                                2%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Total Events</p>
+<h3 class="text-3xl font-bold mt-1">24</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<span class="text-emerald-500 text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">arrow_upward</span>
+                                12%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Total Registrations</p>
+<h3 class="text-3xl font-bold mt-1">1,842</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<span class="text-rose-500 text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">arrow_downward</span>
+                                5%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Volunteer Count</p>
+<h3 class="text-3xl font-bold mt-1">156</h3>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Registration Trends Chart -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold">Registration Trends</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Activity over the last 7 days</p>
+</div>
+<select class="bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-xs font-medium py-1.5 focus:ring-0">
+<option>This Week</option>
+<option>Last Month</option>
+</select>
+</div>
+<div class="h-64 flex flex-col justify-between">
+<div class="flex-1 relative flex items-end gap-2">
+<svg class="w-full h-full" fill="none" preserveaspectratio="none" viewbox="0 0 478 150" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18 109 18 21 36 21C54 21 54 41 72 41C90 41 90 93 108 93C127 93 127 33 145 33C163 33 163 101 181 101C199 101 199 61 217 61C236 61 236 45 254 45C272 45 272 121 290 121C308 121 308 149 326 149C344 149 344 1 363 1C381 1 381 81 399 81C417 81 417 129 435 129C453 129 453 25 472 25" stroke="#1337ec" stroke-linecap="round" stroke-width="3"></path>
+<path d="M0 109C18 109 18 21 36 21C54 21 54 41 72 41C90 41 90 93 108 93C127 93 127 33 145 33C163 33 163 101 181 101C199 101 199 61 217 61C236 61 236 45 254 45C272 45 272 121 290 121C308 121 308 149 326 149C344 149 344 1 363 1C381 1 381 81 399 81C417 81 417 129 435 129C453 129 453 25 472 25V150H0V109Z" fill="url(#chartGradient)"></path>
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#1337ec" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#1337ec" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex justify-between mt-4 text-xs font-semibold text-slate-400 tracking-wider">
+<span>MON</span>
+<span>TUE</span>
+<span>WED</span>
+<span>THU</span>
+<span>FRI</span>
+<span>SAT</span>
+<span>SUN</span>
+</div>
+</div>
+</div>
+<!-- Side Notifications/Quick Actions -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<h3 class="text-lg font-bold mb-6">Recent Activity</h3>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="size-2 bg-primary rounded-full mt-1.5 shrink-0"></div>
+<div>
+<p class="text-sm font-medium">New registration for Career Fair</p>
+<p class="text-xs text-slate-500 mt-0.5">2 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-2 bg-emerald-500 rounded-full mt-1.5 shrink-0"></div>
+<div>
+<p class="text-sm font-medium">Volunteer application approved</p>
+<p class="text-xs text-slate-500 mt-0.5">45 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-2 bg-amber-500 rounded-full mt-1.5 shrink-0"></div>
+<div>
+<p class="text-sm font-medium">Event "Hackathon 2024" published</p>
+<p class="text-xs text-slate-500 mt-0.5">3 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-2 bg-primary rounded-full mt-1.5 shrink-0"></div>
+<div>
+<p class="text-sm font-medium">New registration for Career Fair</p>
+<p class="text-xs text-slate-500 mt-0.5">5 hours ago</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-2 text-sm font-semibold text-primary border border-primary/20 hover:bg-primary/5 rounded-lg transition-colors">
+                            View All Notifications
+                        </button>
+</div>
+</div>
+<!-- Upcoming Events Table -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<h3 class="text-lg font-bold">Upcoming Events</h3>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500">
+<span class="material-symbols-outlined text-xl">filter_list</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500">
+<span class="material-symbols-outlined text-xl">download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50">
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Event Details</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Registrations</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Corporate tech event audience background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-xw9C6SW-F8y9OVE25prkGoxBqcyaqNillZBsk2B3M2RZs5j4RrinUYp2dpoHnncMQ0pO0fK7fn8aKB8nGnZNZm2iTYr8vmnoiS-pC6o32wxOW5v5aVuCXh0FSKZJsd3p-6G-zYRFB5EMHOgI4pCMbG5Ezpnwc0RNw-RGVnTczLAPvEQ7r2OKyLI6klb_Nzni6dlqKLvglaGmlfoDsUebbTiG07nAaW0LfDCvD8ifJF7QPgQIouvvkOJqWfKUfAQNLdPClcKbY4o"/>
+</div>
+<div>
+<p class="font-bold text-sm">Tech Innovators Summit</p>
+<p class="text-xs text-slate-500">Main Auditorium</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-medium">Oct 24, 2024</p>
+<p class="text-xs text-slate-500">10:00 AM</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between text-xs font-medium">
+<span>425/500</span>
+<span class="text-slate-400">85%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                            Live
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="University students studying in library" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3tos-YvhSG4jTVg-R1OV2cTPl8gT-LgIv_hwm2vnIG-jAsrhiVYKb5b9iA8CFJSaUR5upBdXDrfJHjcfY2JgDusno_ZuFTnvR9wMkEHwUxYLkbRSakwv_e9uS7SmO5fKl4EsIGxS6s82nt9MkqkcWJS0CXW6JT2g1hA7yYi4mTrEi7QwLBdfb_d9BpJzJ4AdFFC2zwc9SNy3_hsrMzzXUolEF3YP6XlAXObC82TlQkDlwN-jnkVsy6uPv83oCd4mIsxOTOCKXQ5I"/>
+</div>
+<div>
+<p class="font-bold text-sm">Spring Career Fair</p>
+<p class="text-xs text-slate-500">Student Union Wing B</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-medium">Nov 05, 2024</p>
+<p class="text-xs text-slate-500">09:00 AM</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between text-xs font-medium">
+<span>128/300</span>
+<span class="text-slate-400">42%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 42%;"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+<span class="size-1.5 rounded-full bg-amber-500"></span>
+                                            Draft
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Team of developers working together" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8VWC3XMF843BtGxWrnl1ib-w8HZPEUMFIYsURQGwevBSvJne8qxNgwrngsh7jsyxEV_PpY28YlZEuilhhC9CDKUXyAPq74TML2O4fmcopc_JZE4YKYiF3FisJZEEWpJnWYLpWdNrywcGxRvC3WGHocDBeSduQXO1dYhf0na8TQoLSxVhvrYj6fl-wLi4oh7TIKwpTGWv6I6GoiZ1zqArY2xbNU_0LCPWtTtZxOqhI-avl1EyqU0Sk9KNH8GYKogkzmHIsylJDMq0"/>
+</div>
+<div>
+<p class="font-bold text-sm">Winter Hackathon</p>
+<p class="text-xs text-slate-500">Computer Lab 402</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm font-medium">Dec 12, 2024</p>
+<p class="text-xs text-slate-500">08:00 AM</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1 w-32">
+<div class="flex justify-between text-xs font-medium">
+<span>210/250</span>
+<span class="text-slate-400">84%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 84%;"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/100">
+<span class="size-1.5 rounded-full bg-primary"></span>
+                                            Upcoming
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
+<p class="text-sm text-slate-500">Showing 3 of 24 events</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-800 rounded-md hover:bg-white dark:hover:bg-slate-800 transition-colors">Previous</button>
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-800 rounded-md hover:bg-white dark:hover:bg-slate-800 transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UniEvents Admin - University Event Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg p-2 text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight">UniEvents</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Admin Control</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined text-xl">meeting_room</span>
+<span class="text-sm font-medium">Venue Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="text-sm font-medium">Staff &amp; Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined text-xl">inventory_2</span>
+<span class="text-sm font-medium">Resource Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800" href="#">
+<span class="material-symbols-outlined text-xl">calendar_month</span>
+<span class="text-sm font-medium">Event Calendar</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Admin user profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsp1xvBV2ObC0b_r-untQ3TIqR2g_Sde2fk7GUfLqjdXOXTJlNdTsoqd1ImachhTHnqy60tlOp_pI6SoMRwxF0gYZ8Gz3AM13481FTxAbGBQnBMcV9Ws-n0xjsy5uj7lFNFnPfJAqAj3wvyYNLTrUydYUIy2uE1ZlAkFKFqXsyVMn4T_-Pl5amVeTgIfQ3zBCr9pKmqm_G86Hxw3eB4yozx4r-_fFJBSTGwjxDZF-ejUZBy2str_BX-UyHobZUNm245MAVzgbVC5U"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">Dr. Peterson</p>
+<p class="text-xs text-slate-500 truncate">Super Admin</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-lg">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-8">
+<header class="flex justify-between items-center mb-8">
+<div>
+<h2 class="text-3xl font-bold tracking-tight">Platform Overview</h2>
+<p class="text-slate-500 dark:text-slate-400">Monitor campus event resources and real-time activity.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                    Export PDF
+                </button>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">add</span>
+                    New Event
+                </button>
+</div>
+</header>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 rounded-lg">
+<span class="material-symbols-outlined">event</span>
+</div>
+<span class="text-green-500 text-xs font-bold">+12%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Events</p>
+<h3 class="text-2xl font-bold">1,284</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 rounded-lg">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<span class="text-green-500 text-xs font-bold">+2%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Active Staff</p>
+<h3 class="text-2xl font-bold">42</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-50 dark:bg-amber-900/30 text-amber-600 rounded-lg">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<span class="text-red-500 text-xs font-bold">-5%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Venue Occupancy</p>
+<h3 class="text-2xl font-bold">85%</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 rounded-lg">
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<span class="text-green-500 text-xs font-bold">+15%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Items Booked</p>
+<h3 class="text-2xl font-bold">450</h3>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<h4 class="font-bold mb-6 flex items-center justify-between">
+                    Booking Activity (7 Days)
+                    <span class="text-xs font-normal text-slate-400">May 14 - May 21</span>
+</h4>
+<div class="h-48 flex items-end justify-between gap-2 px-2">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative group h-[40%] hover:bg-primary/40 transition-colors">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold opacity-0 group-hover:opacity-100">45</div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative group h-[65%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-primary/20 dark:bg-primary/30 rounded-t-lg relative group h-[90%] hover:bg-primary/40 transition-colors border-t-4 border-primary"></div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative group h-[55%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative group h-[75%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative group h-[30%] hover:bg-primary/40 transition-colors"></div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative group h-[85%] hover:bg-primary/40 transition-colors"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<h4 class="font-bold mb-6">Resource Utilization</h4>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-medium">Projectors</span>
+<span class="text-slate-400">18/20 in use</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[90%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-medium">PA Systems</span>
+<span class="text-slate-400">5/12 in use</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-amber-500 w-[42%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-medium">Wireless Mics</span>
+<span class="text-slate-400">30/32 in use</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[94%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-medium">Laptops</span>
+<span class="text-slate-400">10/50 in use</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-emerald-500 w-[20%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Venue Management Table -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden mb-8">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h4 class="font-bold">Venue Management</h4>
+<div class="flex gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-9 pr-4 py-1.5 text-sm bg-slate-50 dark:bg-slate-800 border-none rounded-lg focus:ring-2 focus:ring-primary/20 w-64" placeholder="Search halls..." type="text"/>
+</div>
+<button class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-100">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+<tr>
+<th class="px-6 py-3 font-semibold">Venue Name</th>
+<th class="px-6 py-3 font-semibold">Capacity</th>
+<th class="px-6 py-3 font-semibold">Type</th>
+<th class="px-6 py-3 font-semibold">Current Status</th>
+<th class="px-6 py-3 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<td class="px-6 py-4">
+<div class="font-medium">Great North Auditorium</div>
+<div class="text-xs text-slate-400">Main Campus, Building A</div>
+</td>
+<td class="px-6 py-4">1,200</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs">Auditorium</span></td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+<span class="size-2 rounded-full bg-emerald-500"></span>
+                                    Available
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-medium hover:underline">View Schedule</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<td class="px-6 py-4">
+<div class="font-medium">Science Wing Room 102</div>
+<div class="text-xs text-slate-400">East Campus, Block S</div>
+</td>
+<td class="px-6 py-4">150</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs">Lecture Hall</span></td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+<span class="size-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                    In Use
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-medium hover:underline">View Schedule</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<td class="px-6 py-4">
+<div class="font-medium">Innovation Hub</div>
+<div class="text-xs text-slate-400">West Campus, Tech Square</div>
+</td>
+<td class="px-6 py-4">80</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs">Meeting Space</span></td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+<span class="size-2 rounded-full bg-emerald-500"></span>
+                                    Available
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-medium hover:underline">View Schedule</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Staff & Resource Summary Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Staff List -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-bold">Active Event Staff</h4>
+<button class="text-xs text-primary font-bold">View Directory</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">JD</div>
+<div class="flex-1">
+<p class="text-sm font-medium">Jane Doe</p>
+<p class="text-xs text-slate-400">Logistics Coordinator</p>
+</div>
+<div class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 text-[10px] font-bold rounded uppercase">Online</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold">MS</div>
+<div class="flex-1">
+<p class="text-sm font-medium">Mark Stevens</p>
+<p class="text-xs text-slate-400">AV Technician</p>
+</div>
+<div class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-400 text-[10px] font-bold rounded uppercase">Offline</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">RH</div>
+<div class="flex-1">
+<p class="text-sm font-medium">Robert Hudson</p>
+<p class="text-xs text-slate-400">Campus Security Liaison</p>
+</div>
+<div class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 text-[10px] font-bold rounded uppercase">Online</div>
+</div>
+</div>
+</div>
+<!-- Resource Inventory Quick View -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-bold">Low Inventory Alerts</h4>
+<button class="text-xs text-primary font-bold">Manage Store</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-red-500">battery_alert</span>
+<span class="text-sm font-medium">AA Batteries (Bulk)</span>
+</div>
+<span class="text-red-600 text-sm font-bold">2 units left</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-900/30 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-amber-500">layers</span>
+<span class="text-sm font-medium">PVC ID Cards</span>
+</div>
+<span class="text-amber-600 text-sm font-bold">45 units left</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/30 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-500">cable</span>
+<span class="text-sm font-medium">HDMI Cables (5m)</span>
+</div>
+<span class="text-blue-600 text-sm font-bold">Restocked today</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
