@@ -1,26 +1,26 @@
 # Sprint Plan – Event Management & Coordination Platform (EMCP)
 
-## Project Timeline (10 Weeks)
+## Project Timeline (12 Weeks)
 
-The development of the Event Management & Coordination Platform follows an Agile sprint-based approach. Each sprint represents one week of work, ensuring continuous progress and evaluation throughout the project lifecycle.
+The development of the Event Management & Coordination Platform follows an Agile sprint-based methodology. Each sprint represents one week of work and focuses on a specific phase of the project lifecycle.
 
 ---
 
-## Sprint 1 – Problem Understanding
+## Sprint 1 – Project Initiation
 
 **Week:** 1
 
 **Tasks**
 
 * Understand project problem statement
-* Define system scope and objectives
-* Identify stakeholders and users
-* Conduct initial research on event management systems
+* Define project scope and objectives
+* Identify stakeholders
+* Conduct background research on event management systems
 
 **Deliverables**
 
-* Problem statement document
-* Initial project plan
+* Initial project proposal
+* Problem definition document
 
 ---
 
@@ -31,13 +31,13 @@ The development of the Event Management & Coordination Platform follows an Agile
 **Tasks**
 
 * Conduct domain expert interaction
-* Identify actors (Organizer, Attendee, Staff, Admin)
+* Identify system actors (Organizer, Attendee, Staff, Admin)
 * Identify system features and modules
 * Prepare Software Requirements Specification (SRS)
 
 **Deliverables**
 
-* Domain expert interaction document
+* Domain expert interaction report
 * SRS document
 
 ---
@@ -56,24 +56,24 @@ The development of the Event Management & Coordination Platform follows an Agile
 **Deliverables**
 
 * UML diagrams
-* Architecture overview
+* System architecture overview
 
 ---
 
-## Sprint 4 – System Design
+## Sprint 4 – UI/UX Design
 
 **Week:** 4
 
 **Tasks**
 
-* Design UI/UX screens using Figma
-* Design system workflows
-* Review UML diagrams and update them based on feedback
+* Design login and authentication screens
+* Design event browsing and registration pages
+* Design organizer dashboard
+* Design admin management interfaces
 
 **Deliverables**
 
-* Complete Figma designs
-* Updated UML diagrams
+* Complete Figma UI designs
 
 ---
 
@@ -84,17 +84,16 @@ The development of the Event Management & Coordination Platform follows an Agile
 **Tasks**
 
 * Design ER diagram
-* Define database tables and relationships
-* Create DBschema.sql file
+* Define database entities and relationships
+* Implement database schema (DBschema.sql)
 * Organize GitHub repository structure
-* Setup JIRA project and task tracking
+* Prepare documentation for review
 
 **Deliverables**
 
-* ER Diagram
+* ER diagram
 * Database schema
-* GitHub repository structure
-* Sprint roadmap documentation
+* Updated GitHub repository
 
 ---
 
@@ -105,12 +104,14 @@ The development of the Event Management & Coordination Platform follows an Agile
 **Tasks**
 
 * Setup backend framework
-* Implement user authentication system
-* Implement user role management
+* Configure database connection
+* Implement user authentication
+* Implement role-based access control
 
 **Deliverables**
 
 * Authentication module
+* Database connectivity
 
 ---
 
@@ -120,9 +121,9 @@ The development of the Event Management & Coordination Platform follows an Agile
 
 **Tasks**
 
-* Implement event creation
+* Implement event creation functionality
 * Implement event update and deletion
-* Implement venue allocation
+* Implement venue allocation logic
 
 **Deliverables**
 
@@ -130,58 +131,84 @@ The development of the Event Management & Coordination Platform follows an Agile
 
 ---
 
-## Sprint 8 – Registration & Attendance Module
+## Sprint 8 – Event Registration Module
 
 **Week:** 8
 
 **Tasks**
 
+* Implement event browsing
 * Implement event registration system
-* Implement attendance tracking
 * Validate event capacity constraints
 
 **Deliverables**
 
 * Registration module
-* Attendance module
 
 ---
 
-## Sprint 9 – Resource & Staff Management
+## Sprint 9 – Attendance Management
 
 **Week:** 9
 
 **Tasks**
 
-* Implement staff assignment system
-* Implement resource allocation system
-* Integrate modules with database
+* Implement attendance marking system
+* Validate registration before attendance
+* Store attendance records
 
 **Deliverables**
 
-* Staff management module
-* Resource management module
+* Attendance module
 
 ---
 
-## Sprint 10 – Testing & Final Deployment
+## Sprint 10 – Resource & Staff Management
 
 **Week:** 10
 
 **Tasks**
 
-* Perform system testing
-* Fix bugs and issues
-* Finalize documentation
-* Prepare final project demonstration
+* Implement staff assignment functionality
+* Implement resource allocation system
+* Integrate staff and resource modules with events
 
 **Deliverables**
 
-* Fully functional system
-* Final project submission
+* Staff management module
+* Resource allocation module
 
 ---
 
-## Conclusion
+## Sprint 11 – System Integration & Testing
 
-The sprint-based roadmap ensures that the development of the Event Management & Coordination Platform is structured and progressive. Early sprints focus on analysis and design, while later sprints concentrate on implementation, testing, and deployment.
+**Week:** 11
+
+**Tasks**
+
+* Integrate frontend and backend
+* Perform system testing
+* Fix bugs and errors
+
+**Deliverables**
+
+* Fully integrated system
+* Bug fixes
+
+---
+
+## Sprint 12 – Final Deployment & Documentation
+
+**Week:** 12
+
+**Tasks**
+
+* Finalize project documentation
+* Prepare project presentation
+* Deploy system for demonstration
+* Perform final validation
+
+**Deliverables**
+
+* Final project system
+* Final project documentation
