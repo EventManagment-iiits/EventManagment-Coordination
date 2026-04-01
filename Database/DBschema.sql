@@ -91,7 +91,7 @@ CREATE TABLE attendance (
 
 -- ==========================================
 -- Event Staff Table
--- ==========================================
+-- ========================================== 
 CREATE TABLE event_staff (
     assignment_id INT AUTO_INCREMENT PRIMARY KEY,
     event_id INT NOT NULL,
