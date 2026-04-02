@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Super User dashboard for EMCP — full system-level control across all modules including users, venues, resources, events, and registrations." />
     <title>Super User | EMCP</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard" data-page="super-user">
         <aside class="sidebar" aria-label="Sidebar">
-            <div class="brand brand-sidebar"><span class="brand-mark" aria-hidden="true">▣</span> EMCP <span class="muted small">Super User</span></div>
+            <div class="brand brand-sidebar"><img src="assets/favicon.png" alt="" class="brand-mark" /> EMCP <span class="muted small">Super User</span></div>
             <nav class="nav-menu" aria-label="Modules">
                 <button class="nav-item active" data-module="dashboard">Dashboard</button>
                 <button class="nav-item" data-module="users">Users</button>
@@ -29,11 +31,15 @@
             </div>
         </aside>
 
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
         <main class="main-content" aria-label="Main">
             <header class="topbar">
-                <div>
-                    <h1 id="page-title">Dashboard</h1>
-                    <div class="muted" id="page-subtitle">System-level control across all modules.</div>
+                <div style="display:flex;align-items:center;gap:12px">
+                    <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle menu">☰</button>
+                    <div>
+                        <h1 id="page-title">Dashboard</h1>
+                        <div class="muted" id="page-subtitle">System-level control across all modules.</div>
+                    </div>
                 </div>
                 <div class="topbar-actions">
                     <input id="global-search" type="search" placeholder="Search..." class="search-bar" />

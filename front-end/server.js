@@ -24,7 +24,7 @@ app.get('/staff', (req, res) => res.render('staff'));
 app.get('/super-user', (req, res) => res.render('super-user'));
 
 app.use((req, res) => {
-  res.status(404).send('Not Found');
+  res.status(404).sendFile(path.join(__dirname, '404.html'));
 });
 
 app.listen(PORT, () => {

@@ -21,6 +21,7 @@
                 orgDept: form.orgDept?.value,
                 organizerRole: form.organizerRole?.value,
                 password: form.password?.value,
+                confirmPassword: form.confirmPassword?.value,
                 agree: form.agree?.checked
             };
 
@@ -30,8 +31,13 @@
                 orgDept: [required('Organization / Dept'), maxLength('Organization / Dept', 120)],
                 organizerRole: [required('Role selection')],
                 password: [password()],
+                confirmPassword: [required('Confirm password')],
                 agree: [mustBeChecked('Agreement')]
             });
+
+            if (!errors.confirmPassword && fields.confirmPassword !== fields.password) {
+                errors.confirmPassword = 'Passwords do not match.';
+            }
 
             if (Object.keys(errors).length > 0) {
                 setFormErrors(form, errors, summary);

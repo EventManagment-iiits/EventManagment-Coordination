@@ -20,6 +20,7 @@
                 email: form.email?.value,
                 orgDept: form.orgDept?.value,
                 password: form.password?.value,
+                confirmPassword: form.confirmPassword?.value,
                 agree: form.agree?.checked
             };
 
@@ -28,8 +29,13 @@
                 email: [email(), maxLength('Email', 150)],
                 orgDept: [required('Department / Program'), maxLength('Department / Program', 120)],
                 password: [password()],
+                confirmPassword: [required('Confirm password')],
                 agree: [mustBeChecked('Agreement')]
             });
+
+            if (!errors.confirmPassword && fields.confirmPassword !== fields.password) {
+                errors.confirmPassword = 'Passwords do not match.';
+            }
 
             if (Object.keys(errors).length > 0) {
                 setFormErrors(form, errors, summary);

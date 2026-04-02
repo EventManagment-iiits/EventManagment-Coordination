@@ -321,6 +321,7 @@
         if (!currentUser) return;
 
         window.EMCP.guard.bindLogout();
+        window.EMCP.guard.initSidebarToggle();
         nav = window.EMCP.guard.initSidebarNav();
         modal = initModal();
 

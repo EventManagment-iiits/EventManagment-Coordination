@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Create an organizer account on EMCP to coordinate and manage university events, volunteers, and resources." />
     <title>Create Organizer Account | EMCP</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand-link" href="/">
-                <span class="brand-mark" aria-hidden="true">▣</span>
+                <img src="assets/favicon.png" alt="" class="brand-mark" />
                 <span class="brand-text">EMCP</span>
             </a>
             <div class="muted small">Already have an account? <a class="text-link" href="/login">Login</a></div>
@@ -58,6 +60,12 @@
                         <label for="password">Password</label>
                         <input id="password" name="password" type="password" placeholder="••••••••" />
                         <span class="error-msg" data-error-for="password"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="••••••••" />
+                        <span class="error-msg" data-error-for="confirmPassword"></span>
                     </div>
 
                     <div class="form-group">
