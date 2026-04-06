@@ -62,7 +62,7 @@ front-end/
 │       ├── staff.js
 │       └── super-user.js
 ├── *.ejs                      ← View templates (10 pages)
-├── 404.html                   ← Custom error page
+├── 404.ejs                    ← Custom error page
 ├── server.js                  ← Express dev server (serves EJS + static files)
 └── package.json
 ```

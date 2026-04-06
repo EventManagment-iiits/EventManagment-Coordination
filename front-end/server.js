@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 
 const app = express();
@@ -24,7 +23,7 @@ app.get('/staff', (req, res) => res.render('staff'));
 app.get('/super-user', (req, res) => res.render('super-user'));
 
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, '404.html'));
+  res.status(404).render('404');
 });
 
 app.listen(PORT, () => {
