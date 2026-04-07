@@ -83,7 +83,7 @@
             </div>
             <div class="form-group">
                 <label for="imageUrl">Event Image URL</label>
-                <input id="imageUrl" name="imageUrl" type="url" placeholder="https://example.com/event.jpg" value="${existing ? escapeHtml(existing.imageUrl || '') : ''}" />
+                <input id="imageUrl" name="imageUrl" type="text" placeholder="https://example.com/event.jpg" value="${existing ? escapeHtml(existing.imageUrl || '') : ''}" />
                 <span class="error-msg" data-error-for="imageUrl"></span>
             </div>
             <div class="form-row">
@@ -144,7 +144,7 @@
                 const errors = validate(fields, {
                     title: [required('Title'), maxLength('Title', 200)],
                     description: [maxLength('Description', 800)],
-                    imageUrl: [maxLength('Image URL', 500), optionalUrl('Image URL')],
+                    imageUrl: [optionalUrl('Image URL')],
                     eventDate: [required('Event date')],
                     capacity: [positiveInt('Capacity')],
                     startTime: [required('Start time')],

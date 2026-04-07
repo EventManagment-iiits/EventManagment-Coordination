@@ -81,15 +81,28 @@
         const closeBtn = document.getElementById('modal-close');
         if (!modal) return null;
 
+        let activeController = null;
+
         function close() {
             modal.classList.add('hidden');
+            if (activeController) {
+                activeController.abort();
+                activeController = null;
+            }
             const form = document.getElementById('modal-form');
             if (form) form.innerHTML = '';
             const body = document.getElementById('modal-body');
             if (body) body.innerHTML = '';
+            modal.querySelector('.modal-content')?.classList?.remove('modal-wide');
         }
 
         function open({ title, formHtml, onSubmit, wide = false }) {
+            // Clean up any previous modal state
+            if (activeController) {
+                activeController.abort();
+                activeController = null;
+            }
+
             const titleEl = document.getElementById('modal-title');
             if (titleEl) titleEl.textContent = title || 'Modal';
             if (wide) modal.querySelector('.modal-content')?.classList?.add('modal-wide');
@@ -98,13 +111,14 @@
             if (form) {
                 form.innerHTML = formHtml || '';
                 if (typeof onSubmit === 'function') {
+                    activeController = new AbortController();
                     form.addEventListener(
                         'submit',
                         (e) => {
                             e.preventDefault();
                             onSubmit(form);
                         },
-                        { once: true }
+                        { signal: activeController.signal }
                     );
                 }
             }
