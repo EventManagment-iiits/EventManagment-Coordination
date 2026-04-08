@@ -1,5 +1,13 @@
 (function () {
     'use strict';
+  
+     //Ye file UI utilities ka collection hai
+     //  — DOM helpers, form errors, toast 
+     // notifications, modal behavior, aur
+     //  formatting.
+
+
+
 
     function qs(sel, root = document) {
         return root.querySelector(sel);

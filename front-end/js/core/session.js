@@ -1,6 +1,12 @@
 (function () {
     'use strict';
 
+     //Ye file login session manage 
+     // karti hai — user
+     //  ka data sessionStorage me rakhti
+     //  hai aur dashboard 
+     // redirect handle karti hai.
+
     const { ROLES, SESSION_KEYS, DASHBOARD_BY_ROLE } = window.EMCP.constants;
 
     function getCurrentUser() {

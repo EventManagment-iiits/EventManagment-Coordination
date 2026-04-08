@@ -1,0 +1,11 @@
+/* ================================================================
+   404 Page Styles (404.ejs)
+   ================================================================ */
+
+.error-page {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 40px 20px;
+}
+.error-page h1 { font-size: 6rem; font-weight: 900; color: var(--primary); line-height: 1; }
+.error-page h2 { font-size: 1.5rem; font-weight: 700; margin-top: 8px; }
+.error-page p { color: var(--text-secondary); margin: 12px 0 24px; max-width: 40ch; }

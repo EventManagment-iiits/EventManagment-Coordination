@@ -1,6 +1,19 @@
 (function () {
     'use strict';
 
+
+
+
+    // Yeh file local data storage 
+    // layer hai — actual database
+    //  ki jagah localStorage use 
+    // karta hai. Iska kaam CRUD 
+    // operations provide karna hai 
+    // (Create/Read/Update/Delete) 
+    // for users, events, venues, resources,
+    //  registrations, attendance, etc.
+
+
     const { STORAGE_KEYS, ROLES } = window.EMCP.constants;
 
     function safeParse(raw, fallback) {

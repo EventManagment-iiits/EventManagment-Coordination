@@ -1,6 +1,10 @@
 (function () {
     'use strict';
 
+
+    // ye page Ye file page protection + dashboard navigation\
+    //  handle karta hai. Iska main kaam: login check,
+    //  role check, sidebar behavior
     const { ROLES } = window.EMCP.constants;
 
     function requireAuth(allowedRoles) {
