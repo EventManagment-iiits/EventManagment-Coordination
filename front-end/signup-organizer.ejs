@@ -1,114 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Create an organizer account on EMCP to coordinate and manage university events, volunteers, and resources." />
+    <meta
+      name="description"
+      content="Create an organizer account on EMCP to coordinate and manage university events, volunteers, and resources."
+    />
     <title>Create Organizer Account | EMCP</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/public.css" />
+    <link rel="stylesheet" href="css/signup.css" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <header class="site-header">
-        <div class="container header-inner">
-            <a class="brand-link" href="/">
-                <img src="assets/favicon.png" alt="" class="brand-mark" />
-                <span class="brand-text">EMCP</span>
-            </a>
-            <div class="muted small">Already have an account? <a class="text-link" href="/login">Login</a></div>
+      <div class="container header-inner">
+        <a class="brand-link" href="/">
+          <img src="assets/favicon.png" alt="" class="brand-mark" />
+          <span class="brand-text">EMCP</span>
+        </a>
+        <div class="muted small">
+          Already have an account? <a class="text-link" href="/login">Login</a>
         </div>
+      </div>
     </header>
 
     <main class="container page">
-        <section class="signup-split">
-            <div class="signup-left">
-                <h1>Create Organizer Account</h1>
-                <p class="subtitle">Join the Event Management & Coordination Platform for institutions.</p>
+      <section class="signup-split">
+        <div class="signup-left">
+          <h1>Create Organizer Account</h1>
+          <p class="subtitle">
+            Join the Event Management & Coordination Platform for institutions.
+          </p>
 
-                <form id="signup-form" class="form" novalidate>
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input id="fullName" name="fullName" type="text" placeholder="John Doe" />
-                        <span class="error-msg" data-error-for="fullName"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Institutional Email</label>
-                        <input id="email" name="email" type="email" placeholder="name@university.edu" />
-                        <span class="error-msg" data-error-for="email"></span>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="orgDept">Organization / Dept</label>
-                            <input id="orgDept" name="orgDept" type="text" placeholder="Student Council" />
-                            <span class="error-msg" data-error-for="orgDept"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="organizerRole">Role Selection</label>
-                            <select id="organizerRole" name="organizerRole">
-                                <option value="Lead Organizer">Lead Organizer</option>
-                                <option value="Organizer">Organizer</option>
-                                <option value="Faculty Coordinator">Faculty Coordinator</option>
-                            </select>
-                            <span class="error-msg" data-error-for="organizerRole"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" name="password" type="password" placeholder="••••••••" />
-                        <span class="error-msg" data-error-for="password"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="••••••••" />
-                        <span class="error-msg" data-error-for="confirmPassword"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="checkbox">
-                            <input id="agree" name="agree" type="checkbox" />
-                            <span>I agree to the <a class="text-link" href="#">Terms of Service</a> and <a class="text-link" href="#">Privacy Policy</a></span>
-                        </label>
-                        <span class="error-msg" data-error-for="agree"></span>
-                    </div>
-
-                    <div class="form-error-summary hidden" id="signup-summary" role="alert"></div>
-
-                    <button class="btn-primary w-100" type="submit">Create Organizer Account →</button>
-
-                    <div class="onboarding-benefits">
-                        <div class="benefit">Live Metrics</div>
-                        <div class="benefit">Team Collaboration</div>
-                        <div class="benefit">Secure Audit</div>
-                    </div>
-                    <div class="muted small center mt-16">
-                        Need a different role?
-                        <a class="text-link" href="/signup-attendee">Attendee</a>
-                        ·
-                        <a class="text-link" href="/signup-staff">Volunteer</a>
-                    </div>
-                </form>
+          <form id="signup-form" class="form" novalidate>
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                placeholder="John Doe"
+              />
+              <span class="error-msg" data-error-for="fullName"></span>
             </div>
 
-            <aside class="signup-right" aria-label="Product teaser">
-                <div class="promo-card">
-                    <div class="promo-media" aria-hidden="true"></div>
-                    <h2>Empower your <span class="underline">events</span></h2>
-                    <p class="muted-on-dark">Manage volunteers, track analytics, and streamline institutional workflows in one ecosystem.</p>
-                    <ul class="promo-list">
-                        <li><strong>Centralized Command</strong><span>Every department, every volunteer, one dashboard.</span></li>
-                        <li><strong>Insightful Analytics</strong><span>Automated institutional reporting.</span></li>
-                    </ul>
-                </div>
-            </aside>
-        </section>
+            <div class="form-group">
+              <label for="email">Institutional Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="name@university.edu"
+              />
+              <span class="error-msg" data-error-for="email"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="orgDept">Organization / Dept</label>
+                <input
+                  id="orgDept"
+                  name="orgDept"
+                  type="text"
+                  placeholder="Student Council"
+                />
+                <span class="error-msg" data-error-for="orgDept"></span>
+              </div>
+              <div class="form-group">
+                <label for="organizerRole">Role Selection</label>
+                <select id="organizerRole" name="organizerRole">
+                  <option value="Lead Organizer">Lead Organizer</option>
+                  <option value="Organizer">Organizer</option>
+                  <option value="Faculty Coordinator">
+                    Faculty Coordinator
+                  </option>
+                </select>
+                <span class="error-msg" data-error-for="organizerRole"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="••••••••"
+              />
+              <span class="error-msg" data-error-for="password"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="••••••••"
+              />
+              <span class="error-msg" data-error-for="confirmPassword"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="checkbox">
+                <input id="agree" name="agree" type="checkbox" />
+                <span
+                  >I agree to the
+                  <a class="text-link" href="#">Terms of Service</a> and
+                  <a class="text-link" href="#">Privacy Policy</a></span
+                >
+              </label>
+              <span class="error-msg" data-error-for="agree"></span>
+            </div>
+
+            <div
+              class="form-error-summary hidden"
+              id="signup-summary"
+              role="alert"
+            ></div>
+
+            <button class="btn-primary w-100" type="submit">
+              Create Organizer Account →
+            </button>
+
+            <div class="onboarding-benefits">
+              <div class="benefit">Live Metrics</div>
+              <div class="benefit">Team Collaboration</div>
+              <div class="benefit">Secure Audit</div>
+            </div>
+            <div class="muted small center mt-16">
+              Need a different role?
+              <a class="text-link" href="/signup-attendee">Attendee</a>
+              ·
+              <a class="text-link" href="/signup-staff">Volunteer</a>
+            </div>
+          </form>
+        </div>
+
+        <aside class="signup-right" aria-label="Product teaser">
+          <div class="promo-card">
+            <div class="promo-media" aria-hidden="true"></div>
+            <h2>Empower your <span class="underline">events</span></h2>
+            <p class="muted-on-dark">
+              Manage volunteers, track analytics, and streamline institutional
+              workflows in one ecosystem.
+            </p>
+            <ul class="promo-list">
+              <li>
+                <strong>Centralized Command</strong
+                ><span>Every department, every volunteer, one dashboard.</span>
+              </li>
+              <li>
+                <strong>Insightful Analytics</strong
+                ><span>Automated institutional reporting.</span>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </section>
     </main>
 
-    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <div
+      id="toast-region"
+      class="toast-region"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
     <script src="js/core/constants.js"></script>
     <script src="js/data/seed.js"></script>
@@ -117,5 +180,5 @@
     <script src="js/core/validators.js"></script>
     <script src="js/core/ui.js"></script>
     <script src="js/pages/signup-organizer.js"></script>
-</body>
+  </body>
 </html>

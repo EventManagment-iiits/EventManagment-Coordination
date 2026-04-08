@@ -1,166 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Organizer dashboard for EMCP — create and manage events, registrations, volunteers, and resource allocations." />
+    <meta
+      name="description"
+      content="Organizer dashboard for EMCP — create and manage events, registrations, volunteers, and resource allocations."
+    />
     <title>Organizer | EMCP</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="dashboard" data-page="organizer">
-        <aside class="sidebar" aria-label="Sidebar">
-            <div class="brand brand-sidebar"><img src="assets/favicon.png" alt="" class="brand-mark" /> EMCP <span class="muted small">Organizer</span></div>
-            <nav class="nav-menu" aria-label="Modules">
-                <button class="nav-item active" data-module="events">Events</button>
-                <button class="nav-item" data-module="registrations">Registrations</button>
-                <button class="nav-item" data-module="staff">Volunteers</button>
-                <button class="nav-item" data-module="resources">Resources</button>
-            </nav>
-
-            <div class="user-profile">
-                <div class="avatar" id="org-avatar">OR</div>
-                <div class="user-info">
-                    <div class="user-name" id="current-user-name">Organizer</div>
-                    <button class="text-btn" id="logout-btn" type="button">Logout</button>
-                </div>
-            </div>
-        </aside>
-
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
-        <main class="main-content" aria-label="Main">
-            <header class="topbar">
-                <div style="display:flex;align-items:center;gap:12px">
-                    <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle menu">☰</button>
-                    <div>
-                        <h1 id="page-title">My Events</h1>
-                        <div class="muted" id="page-subtitle">Create and manage your events.</div>
-                    </div>
-                </div>
-                <div class="topbar-actions">
-                    <input id="global-search" type="search" placeholder="Search..." class="search-bar" />
-                    <button class="btn-primary" id="primary-action" type="button">+ Create Event</button>
-                </div>
-            </header>
-
-            <section class="content-area">
-                <div class="module" data-module="events">
-                    <div class="card">
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Venue</th>
-                                        <th>Capacity</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="events-table-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="events-empty">No events yet. Create your first event.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="registrations">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Event Registrations</h2>
-                                <p class="muted">Select an event to view registrations.</p>
-                            </div>
-                            <div class="select-inline">
-                                <label class="sr-only" for="event-filter">Event</label>
-                                <select id="event-filter"></select>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Attendee</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
-                                        <th>Registered</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="org-registrations-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="org-registrations-empty">No registrations for this event.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="staff">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Volunteer Assignments</h2>
-                                <p class="muted">Assign staff to your events.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Volunteer</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="staff-table-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="staff-empty">No volunteer assignments yet.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="resources">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Event Resources</h2>
-                                <p class="muted">Allocate resources for your events.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Resource</th>
-                                        <th>Qty Used</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="event-resources-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="event-resources-empty">No resources allocated yet.</div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Modal">
-        <div class="modal-content">
-            <div class="modal-head">
-                <h2 id="modal-title">Modal</h2>
-                <button class="icon-btn" type="button" id="modal-close" aria-label="Close">✕</button>
-            </div>
-            <form id="modal-form" class="form" novalidate></form>
+      <aside class="sidebar" aria-label="Sidebar">
+        <div class="brand brand-sidebar">
+          <img src="assets/favicon.png" alt="" class="brand-mark" /> EMCP
+          <span class="muted small">Organizer</span>
         </div>
+        <nav class="nav-menu" aria-label="Modules">
+          <button class="nav-item active" data-module="events">Events</button>
+          <button class="nav-item" data-module="registrations">
+            Registrations
+          </button>
+          <button class="nav-item" data-module="staff">Volunteers</button>
+          <button class="nav-item" data-module="resources">Resources</button>
+        </nav>
+
+        <div class="user-profile">
+          <div class="avatar" id="org-avatar">OR</div>
+          <div class="user-info">
+            <div class="user-name" id="current-user-name">Organizer</div>
+            <button class="text-btn" id="logout-btn" type="button">
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebar-overlay"></div>
+      <main class="main-content" aria-label="Main">
+        <header class="topbar">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <button
+              class="sidebar-toggle"
+              id="sidebar-toggle"
+              type="button"
+              aria-label="Toggle menu"
+            >
+              ☰
+            </button>
+            <div>
+              <h1 id="page-title">My Events</h1>
+              <div class="muted" id="page-subtitle">
+                Create and manage your events.
+              </div>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <input
+              id="global-search"
+              type="search"
+              placeholder="Search..."
+              class="search-bar"
+            />
+            <button class="btn-primary" id="primary-action" type="button">
+              + Create Event
+            </button>
+          </div>
+        </header>
+
+        <section class="content-area">
+          <div class="module" data-module="events">
+            <div class="card">
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Venue</th>
+                      <th>Capacity</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="events-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="events-empty">
+                No events yet. Create your first event.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="registrations">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Event Registrations</h2>
+                  <p class="muted">Select an event to view registrations.</p>
+                </div>
+                <div class="select-inline">
+                  <label class="sr-only" for="event-filter">Event</label>
+                  <select id="event-filter"></select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Attendee</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th>Registered</th>
+                    </tr>
+                  </thead>
+                  <tbody id="org-registrations-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="org-registrations-empty">
+                No registrations for this event.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="staff">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Volunteer Assignments</h2>
+                  <p class="muted">Assign staff to your events.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Volunteer</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="staff-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="staff-empty">
+                No volunteer assignments yet.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="resources">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Event Resources</h2>
+                  <p class="muted">Allocate resources for your events.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Resource</th>
+                      <th>Qty Used</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="event-resources-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="event-resources-empty">
+                No resources allocated yet.
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
-    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <div
+      id="modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Modal"
+    >
+      <div class="modal-content">
+        <div class="modal-head">
+          <h2 id="modal-title">Modal</h2>
+          <button
+            class="icon-btn"
+            type="button"
+            id="modal-close"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <form id="modal-form" class="form" novalidate></form>
+      </div>
+    </div>
+
+    <div
+      id="toast-region"
+      class="toast-region"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
     <script src="js/core/constants.js"></script>
     <script src="js/data/seed.js"></script>
@@ -171,5 +227,5 @@
     <script src="js/core/validators.js"></script>
     <script src="js/core/ui.js"></script>
     <script src="js/pages/organizer.js"></script>
-</body>
+  </body>
 </html>

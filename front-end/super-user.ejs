@@ -1,200 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Super User dashboard for EMCP — full system-level control across all modules including users, venues, resources, events, and registrations." />
+    <meta
+      name="description"
+      content="Super User dashboard for EMCP — full system-level control across all modules including users, venues, resources, events, and registrations."
+    />
     <title>Super User | EMCP</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="dashboard" data-page="super-user">
-        <aside class="sidebar" aria-label="Sidebar">
-            <div class="brand brand-sidebar"><img src="assets/favicon.png" alt="" class="brand-mark" /> EMCP <span class="muted small">Super User</span></div>
-            <nav class="nav-menu" aria-label="Modules">
-                <button class="nav-item active" data-module="dashboard">Dashboard</button>
-                <button class="nav-item" data-module="users">Users</button>
-                <button class="nav-item" data-module="venues">Venues</button>
-                <button class="nav-item" data-module="resources">Resources</button>
-                <button class="nav-item" data-module="events">Events</button>
-                <button class="nav-item" data-module="registrations">Registrations</button>
-            </nav>
-
-            <div class="user-profile">
-                <div class="avatar" id="su-avatar">SU</div>
-                <div class="user-info">
-                    <div class="user-name" id="current-user-name">Super User</div>
-                    <button class="text-btn" id="logout-btn" type="button">Logout</button>
-                </div>
-            </div>
-        </aside>
-
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
-        <main class="main-content" aria-label="Main">
-            <header class="topbar">
-                <div style="display:flex;align-items:center;gap:12px">
-                    <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle menu">☰</button>
-                    <div>
-                        <h1 id="page-title">Dashboard</h1>
-                        <div class="muted" id="page-subtitle">System-level control across all modules.</div>
-                    </div>
-                </div>
-                <div class="topbar-actions">
-                    <input id="global-search" type="search" placeholder="Search..." class="search-bar" />
-                    <button class="btn-primary" id="primary-action" type="button">+ Create</button>
-                </div>
-            </header>
-
-            <section class="content-area">
-                <div class="stats-row" id="stats-row"></div>
-
-                <div class="module" data-module="dashboard"></div>
-
-                <div class="module hidden" data-module="users">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">User Management</h2>
-                                <p class="muted">Create, update, and manage roles.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="users-table-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="users-empty">No users found.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="venues">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Venue Management</h2>
-                                <p class="muted">Manage campus venues and capacities.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Venue</th>
-                                        <th>Location</th>
-                                        <th>Capacity</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="venues-table-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="venues-empty">No venues found.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="resources">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Resource Inventory</h2>
-                                <p class="muted">Track shared resources across events.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Resource</th>
-                                        <th>Quantity</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="resources-table-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="resources-empty">No resources found.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="events">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Event Management</h2>
-                                <p class="muted">Create, schedule, and manage events.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Venue</th>
-                                        <th>Capacity</th>
-                                        <th>Organizer</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="events-table-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="events-empty">No events found.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="registrations">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Registrations</h2>
-                                <p class="muted">View and manage attendee registrations.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Attendee</th>
-                                        <th>Event</th>
-                                        <th>Status</th>
-                                        <th>Registered</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="registrations-table-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="registrations-empty">No registrations found.</div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Modal">
-        <div class="modal-content">
-            <div class="modal-head">
-                <h2 id="modal-title">Modal</h2>
-                <button class="icon-btn" type="button" id="modal-close" aria-label="Close">✕</button>
-            </div>
-            <form id="modal-form" class="form" novalidate></form>
+      <aside class="sidebar" aria-label="Sidebar">
+        <div class="brand brand-sidebar">
+          <img src="assets/favicon.png" alt="" class="brand-mark" /> EMCP
+          <span class="muted small">Super User</span>
         </div>
+        <nav class="nav-menu" aria-label="Modules">
+          <button class="nav-item active" data-module="dashboard">
+            Dashboard
+          </button>
+          <button class="nav-item" data-module="users">Users</button>
+          <button class="nav-item" data-module="venues">Venues</button>
+          <button class="nav-item" data-module="resources">Resources</button>
+          <button class="nav-item" data-module="events">Events</button>
+          <button class="nav-item" data-module="registrations">
+            Registrations
+          </button>
+        </nav>
+
+        <div class="user-profile">
+          <div class="avatar" id="su-avatar">SU</div>
+          <div class="user-info">
+            <div class="user-name" id="current-user-name">Super User</div>
+            <button class="text-btn" id="logout-btn" type="button">
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebar-overlay"></div>
+      <main class="main-content" aria-label="Main">
+        <header class="topbar">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <button
+              class="sidebar-toggle"
+              id="sidebar-toggle"
+              type="button"
+              aria-label="Toggle menu"
+            >
+              ☰
+            </button>
+            <div>
+              <h1 id="page-title">Dashboard</h1>
+              <div class="muted" id="page-subtitle">
+                System-level control across all modules.
+              </div>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <input
+              id="global-search"
+              type="search"
+              placeholder="Search..."
+              class="search-bar"
+            />
+            <button class="btn-primary" id="primary-action" type="button">
+              + Create
+            </button>
+          </div>
+        </header>
+
+        <section class="content-area">
+          <div class="stats-row" id="stats-row"></div>
+
+          <div class="module" data-module="dashboard"></div>
+
+          <div class="module hidden" data-module="users">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">User Management</h2>
+                  <p class="muted">Create, update, and manage roles.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="users-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="users-empty">
+                No users found.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="venues">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Venue Management</h2>
+                  <p class="muted">Manage campus venues and capacities.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Venue</th>
+                      <th>Location</th>
+                      <th>Capacity</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="venues-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="venues-empty">
+                No venues found.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="resources">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Resource Inventory</h2>
+                  <p class="muted">Track shared resources across events.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Resource</th>
+                      <th>Quantity</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="resources-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="resources-empty">
+                No resources found.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="events">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Event Management</h2>
+                  <p class="muted">Create, schedule, and manage events.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Venue</th>
+                      <th>Capacity</th>
+                      <th>Organizer</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="events-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="events-empty">
+                No events found.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="registrations">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Registrations</h2>
+                  <p class="muted">View and manage attendee registrations.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Attendee</th>
+                      <th>Event</th>
+                      <th>Status</th>
+                      <th>Registered</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="registrations-table-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="registrations-empty">
+                No registrations found.
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
-    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <div
+      id="modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Modal"
+    >
+      <div class="modal-content">
+        <div class="modal-head">
+          <h2 id="modal-title">Modal</h2>
+          <button
+            class="icon-btn"
+            type="button"
+            id="modal-close"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <form id="modal-form" class="form" novalidate></form>
+      </div>
+    </div>
+
+    <div
+      id="toast-region"
+      class="toast-region"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
     <script src="js/core/constants.js"></script>
     <script src="js/data/seed.js"></script>
@@ -205,5 +265,5 @@
     <script src="js/core/validators.js"></script>
     <script src="js/core/ui.js"></script>
     <script src="js/pages/super-user.js"></script>
-</body>
+  </body>
 </html>

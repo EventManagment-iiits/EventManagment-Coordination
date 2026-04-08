@@ -1,112 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Attendee dashboard for EMCP — browse upcoming campus events and manage your registrations." />
+    <meta
+      name="description"
+      content="Attendee dashboard for EMCP — browse upcoming campus events and manage your registrations."
+    />
     <title>Attendee | EMCP</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="dashboard" data-page="attendee">
-        <aside class="sidebar" aria-label="Sidebar">
-            <div class="brand brand-sidebar"><img src="assets/favicon.png" alt="" class="brand-mark" /> EMCP <span class="muted small">Attendee</span></div>
-            <nav class="nav-menu" aria-label="Modules">
-                <button class="nav-item active" data-module="browse">Browse Events</button>
-                <button class="nav-item" data-module="my">My Registrations</button>
-                <button class="nav-item" data-module="settings">Settings</button>
-            </nav>
-
-            <div class="user-profile">
-                <div class="avatar" id="att-avatar">AT</div>
-                <div class="user-info">
-                    <div class="user-name" id="current-user-name">Attendee</div>
-                    <button class="text-btn" id="logout-btn" type="button">Logout</button>
-                </div>
-            </div>
-        </aside>
-
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
-        <main class="main-content" aria-label="Main">
-            <header class="topbar">
-                <div style="display:flex;align-items:center;gap:12px">
-                    <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Toggle menu">☰</button>
-                    <div>
-                        <h1 id="page-title">Browse Events</h1>
-                        <div class="muted" id="page-subtitle">Discover and register for events.</div>
-                    </div>
-                </div>
-                <div class="topbar-actions">
-                    <input id="global-search" type="search" placeholder="Search events..." class="search-bar" />
-                </div>
-            </header>
-
-            <section class="content-area">
-                <div class="module" data-module="browse">
-                    <div class="tabs">
-                        <button class="tab active" data-tab="upcoming">Upcoming Events</button>
-                        <button class="tab" data-tab="past">Past Events</button>
-                    </div>
-                    <div id="events-grid" class="event-grid"></div>
-                    <div id="events-empty" class="empty-state hidden">No events available.</div>
-                </div>
-
-                <div class="module hidden" data-module="my">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">My Registrations</h2>
-                                <p class="muted">Track your upcoming experiences.</p>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Date</th>
-                                        <th>Venue</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="my-registrations-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="empty-state hidden" id="my-registrations-empty">No registrations yet.</div>
-                    </div>
-                </div>
-
-                <div class="module hidden" data-module="settings">
-                    <div class="card">
-                        <div class="card-head">
-                            <div>
-                                <h2 class="card-title">Settings</h2>
-                                <p class="muted">Profile settings (demo).</p>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="muted">This is a mock prototype; settings are not persisted beyond your user record.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Modal">
-        <div class="modal-content modal-wide">
-            <div class="modal-head">
-                <h2 id="modal-title">Event Details</h2>
-                <button class="icon-btn" type="button" id="modal-close" aria-label="Close">✕</button>
-            </div>
-            <div id="modal-body"></div>
+      <aside class="sidebar" aria-label="Sidebar">
+        <div class="brand brand-sidebar">
+          <img src="assets/favicon.png" alt="" class="brand-mark" /> EMCP
+          <span class="muted small">Attendee</span>
         </div>
+        <nav class="nav-menu" aria-label="Modules">
+          <button class="nav-item active" data-module="browse">
+            Browse Events
+          </button>
+          <button class="nav-item" data-module="my">My Registrations</button>
+          <button class="nav-item" data-module="settings">Settings</button>
+        </nav>
+
+        <div class="user-profile">
+          <div class="avatar" id="att-avatar">AT</div>
+          <div class="user-info">
+            <div class="user-name" id="current-user-name">Attendee</div>
+            <button class="text-btn" id="logout-btn" type="button">
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebar-overlay"></div>
+      <main class="main-content" aria-label="Main">
+        <header class="topbar">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <button
+              class="sidebar-toggle"
+              id="sidebar-toggle"
+              type="button"
+              aria-label="Toggle menu"
+            >
+              ☰
+            </button>
+            <div>
+              <h1 id="page-title">Browse Events</h1>
+              <div class="muted" id="page-subtitle">
+                Discover and register for events.
+              </div>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <input
+              id="global-search"
+              type="search"
+              placeholder="Search events..."
+              class="search-bar"
+            />
+          </div>
+        </header>
+
+        <section class="content-area">
+          <div class="module" data-module="browse">
+            <div class="tabs">
+              <button class="tab active" data-tab="upcoming">
+                Upcoming Events
+              </button>
+              <button class="tab" data-tab="past">Past Events</button>
+            </div>
+            <div id="events-grid" class="event-grid"></div>
+            <div id="events-empty" class="empty-state hidden">
+              No events available.
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="my">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">My Registrations</h2>
+                  <p class="muted">Track your upcoming experiences.</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Date</th>
+                      <th>Venue</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="my-registrations-body"></tbody>
+                </table>
+              </div>
+              <div class="empty-state hidden" id="my-registrations-empty">
+                No registrations yet.
+              </div>
+            </div>
+          </div>
+
+          <div class="module hidden" data-module="settings">
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Settings</h2>
+                  <p class="muted">Profile settings (demo).</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="muted">
+                  This is a mock prototype; settings are not persisted beyond
+                  your user record.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
-    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <div
+      id="modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Modal"
+    >
+      <div class="modal-content modal-wide">
+        <div class="modal-head">
+          <h2 id="modal-title">Event Details</h2>
+          <button
+            class="icon-btn"
+            type="button"
+            id="modal-close"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+
+    <div
+      id="toast-region"
+      class="toast-region"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
     <script src="js/core/constants.js"></script>
     <script src="js/data/seed.js"></script>
@@ -116,5 +171,5 @@
     <script src="js/core/guard.js"></script>
     <script src="js/core/ui.js"></script>
     <script src="js/pages/attendee.js"></script>
-</body>
+  </body>
 </html>

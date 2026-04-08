@@ -1,0 +1,91 @@
+/* ================================================================
+   Signup Pages Styles (signup-*.ejs)
+   ================================================================ */
+
+.signup-split {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: calc(100vh - 120px);
+}
+
+.signup-left {
+    padding: 48px 40px;
+    max-width: 560px;
+}
+.signup-left h1 {
+    font-size: 1.6rem; font-weight: 800;
+    letter-spacing: -0.3px; margin-bottom: 4px;
+}
+
+.signup-right {
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px 40px;
+    background: linear-gradient(135deg, #3730a3, #6366f1);
+    color: #fff;
+    position: relative; overflow: hidden;
+    border-radius: 0;
+}
+.signup-right::before {
+    content: '';
+    position: absolute; top: -40%; right: -40%;
+    width: 180%; height: 180%;
+    background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06), transparent 50%);
+    pointer-events: none;
+}
+
+.promo-card {
+    position: relative; z-index: 1;
+    max-width: 420px;
+}
+.promo-media {
+    width: 100%; height: 160px;
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.12);
+}
+.promo-card h2 {
+    font-size: 1.5rem; font-weight: 800; line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.promo-list {
+    list-style: none; margin-top: 20px;
+    display: grid; gap: 14px;
+}
+.promo-list li {
+    display: grid; gap: 2px;
+    padding: 14px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.promo-list li strong { font-size: 0.92rem; }
+.promo-list li span { font-size: 0.85rem; opacity: 0.8; }
+
+.onboarding-benefits {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-top: 16px;
+}
+.benefit {
+    padding: 6px 14px;
+    background: var(--primary-bg);
+    color: var(--primary);
+    border-radius: var(--radius-pill);
+    font-weight: 700; font-size: 0.8rem;
+    border: 1px solid var(--primary-border);
+}
+
+
+/* ================================================================
+   RESPONSIVE - SIGNUP
+   ================================================================ */
+@media (max-width: 1024px) {
+    .signup-split { grid-template-columns: 1fr; }
+    .signup-right { display: none; }
+    .signup-left { max-width: 100%; padding: 32px 24px; }
+}
+
+@media (max-width: 480px) {
+    .onboarding-benefits { flex-direction: column; }
+}

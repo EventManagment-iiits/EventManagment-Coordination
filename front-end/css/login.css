@@ -1,0 +1,100 @@
+/* ================================================================
+   Login Page Styles (login.ejs)
+   ================================================================ */
+
+.login-split { display: flex; min-height: 100vh; }
+
+.login-left {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; padding: 48px 10%;
+    background: var(--bg-card);
+}
+
+.login-right {
+    flex: 1;
+    background: linear-gradient(135deg, #3730a3, #6366f1, #818cf8);
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px; color: #fff;
+    position: relative; overflow: hidden;
+}
+.login-right::before {
+    content: '';
+    position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.08), transparent 50%);
+    pointer-events: none;
+}
+
+.login-title { font-size: 1.8rem; margin: 14px 0 4px; font-weight: 800; letter-spacing: -0.3px; }
+
+/* Marketing Card (login right panel) */
+.marketing-card {
+    position: relative; z-index: 1;
+    max-width: 400px;
+}
+.marketing-badge {
+    width: 56px; height: 56px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    font-size: 1.4rem; margin-bottom: 20px;
+}
+.marketing-card h2 { font-size: 1.6rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px; }
+
+.marketing-widget {
+    margin-top: 24px; padding: 18px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+.widget-title { font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+.widget-sub { font-weight: 700; margin-top: 4px; }
+.widget-meta { font-size: 0.85rem; opacity: 0.8; margin-top: 2px; }
+
+.quote {
+    margin-top: 24px; font-style: italic;
+    font-size: 0.95rem; line-height: 1.5;
+    opacity: 0.9; border-left: 3px solid rgba(255,255,255,0.4);
+    padding-left: 16px;
+}
+.quote-by { margin-top: 10px; font-size: 0.85rem; opacity: 0.7; font-weight: 600; }
+
+.divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0; color: var(--text-muted);
+    font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 600;
+}
+.divider::before, .divider::after {
+    content: ''; height: 1px; flex: 1;
+    background: var(--border);
+}
+
+.social-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.demo-credentials {
+    margin-top: 24px; padding: 16px;
+    border: 1px dashed rgba(148, 163, 184, 0.5);
+    border-radius: var(--radius-md);
+    background: var(--border-light);
+}
+.demo-title { font-weight: 700; margin-bottom: 8px; font-size: 0.9rem; }
+.demo-list { display: grid; gap: 4px; font-size: 0.85rem; color: var(--text-secondary); }
+
+
+/* ================================================================
+   RESPONSIVE - LOGIN
+   ================================================================ */
+@media (max-width: 768px) {
+    .login-split { flex-direction: column; min-height: auto; }
+    .login-left { padding: 32px 24px; }
+    .login-right { min-height: 280px; padding: 32px 24px; }
+    .marketing-card h2 { font-size: 1.3rem; }
+    .login-title { font-size: 1.5rem; }
+
+    .social-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .login-right { display: none; }
+}

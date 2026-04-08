@@ -1,6 +1,14 @@
 (function () {
     'use strict';
 
+
+  //
+    //yeh file Role‑Based Access Control define karti hai. Simple mapping hai: role → resource → actions.
+
+    // sabse action isi main hai ki kon kya kar raha hai 
+    
+
+
     const { ROLES } = window.EMCP.constants;
 
     const RESOURCES = Object.freeze({
