@@ -1,451 +1,324 @@
 (function () {
     'use strict';
 
+    // ============================================================
+    // repo.js — API Client Layer
+    // Replaces localStorage with fetch() calls to NestJS backend.
+    // All functions are async and return Promises.
+    // ============================================================
 
+    const API_BASE = 'http://localhost:3001/api';
 
-
-    // Yeh file local data storage 
-    // layer hai — actual database
-    //  ki jagah localStorage use 
-    // karta hai. Iska kaam CRUD 
-    // operations provide karna hai 
-    // (Create/Read/Update/Delete) 
-    // for users, events, venues, resources,
-    //  registrations, attendance, etc.
-
-
-    const { STORAGE_KEYS, ROLES } = window.EMCP.constants;
-
-    function safeParse(raw, fallback) {
+    function getHeaders() {
+        const headers = { 'Content-Type': 'application/json' };
         try {
-            if (!raw) return fallback;
-            const val = JSON.parse(raw);
-            return val ?? fallback;
-        } catch {
-            return fallback;
+            const raw = sessionStorage.getItem('emcp_current_user');
+            if (raw) {
+                const user = JSON.parse(raw);
+                if (user.role) headers['x-user-role'] = user.role;
+                if (user.id) headers['x-user-id'] = user.id;
+            }
+        } catch { /* ignore */ }
+        return headers;
+    }
+
+    async function api(path, opts = {}) {
+        const url = `${API_BASE}${path}`;
+        const res = await fetch(url, {
+            headers: getHeaders(),
+            ...opts,
+        });
+        if (!res.ok) {
+            const body = await res.json().catch(() => ({}));
+            const msg = body.message || body.error || `Request failed (${res.status})`;
+            return { ok: false, error: Array.isArray(msg) ? msg.join(', ') : msg };
         }
-    }
-
-    function get(key, fallback = []) {
-        return safeParse(localStorage.getItem(key), fallback);
-    }
-
-    function set(key, rows) {
-        localStorage.setItem(key, JSON.stringify(rows));
-    }
-
-    function id(prefix) {
-        return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
-    }
-
-    function byId(rows, idVal) {
-        return rows.find((r) => r.id === idVal) || null;
-    }
-
-    function removeById(rows, idVal) {
-        return rows.filter((r) => r.id !== idVal);
-    }
-
-    function nowIso() {
-        return new Date().toISOString();
+        const data = await res.json().catch(() => ({}));
+        return data;
     }
 
     // -------- Users
-    function listUsers() {
-        return get(STORAGE_KEYS.USERS);
+    async function listUsers() {
+        const data = await api('/users');
+        return Array.isArray(data) ? data : (data.ok === false ? [] : []);
     }
 
-    function getUser(idVal) {
-        return byId(listUsers(), idVal);
+    async function getUser(id) {
+        const data = await api(`/users/${id}`);
+        return data.ok === false ? null : data;
     }
 
-    function getUserByEmail(email) {
-        const e = String(email || '').trim().toLowerCase();
-        return listUsers().find((u) => String(u.email).toLowerCase() === e) || null;
+    async function getUserByEmail(email) {
+        const users = await listUsers();
+        return users.find(u => String(u.email).toLowerCase() === String(email).toLowerCase()) || null;
     }
 
-    function createUser(user) {
-        const users = listUsers();
-        const email = String(user.email || '').trim().toLowerCase();
-        if (users.some((u) => String(u.email).toLowerCase() === email)) {
-            return { ok: false, error: 'Email already exists.' };
-        }
-        const record = {
-            id: id('u'),
-            name: String(user.name || '').trim(),
-            email,
-            password: String(user.password || ''),
-            role: user.role,
-            status: user.status || 'Active',
-            orgDept: user.orgDept || '',
-            createdAt: nowIso()
-        };
-        users.push(record);
-        set(STORAGE_KEYS.USERS, users);
-        return { ok: true, record };
+    async function createUser(user) {
+        const data = await api('/users/signup', {
+            method: 'POST',
+            body: JSON.stringify(user),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function updateUser(idVal, patch) {
-        const users = listUsers();
-        const idx = users.findIndex((u) => u.id === idVal);
-        if (idx === -1) return { ok: false, error: 'User not found.' };
-
-        if (patch.email) {
-            const email = String(patch.email).trim().toLowerCase();
-            const dup = users.some((u) => u.id !== idVal && String(u.email).toLowerCase() === email);
-            if (dup) return { ok: false, error: 'Email already exists.' };
-            patch.email = email;
-        }
-
-        users[idx] = { ...users[idx], ...patch };
-        set(STORAGE_KEYS.USERS, users);
-        return { ok: true, record: users[idx] };
+    async function updateUser(id, patch) {
+        const data = await api(`/users/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(patch),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function deleteUser(idVal) {
-        // Cascade delete events, registrations, attendance, staff assignments
-        const events = listEvents().filter((e) => e.organizerId === idVal);
-        events.forEach((e) => deleteEvent(e.id));
+    async function deleteUser(id) {
+        const data = await api(`/users/${id}`, { method: 'DELETE' });
+        return data.ok === false ? data : { ok: true };
+    }
 
-        const regs = listRegistrations().filter((r) => r.userId === idVal);
-        regs.forEach((r) => deleteRegistration(r.id));
-
-        const staff = listEventStaff().filter((a) => a.staffId === idVal);
-        set(STORAGE_KEYS.EVENT_STAFF, listEventStaff().filter((a) => a.staffId !== idVal));
-
-        const users = removeById(listUsers(), idVal);
-        set(STORAGE_KEYS.USERS, users);
-        return { ok: true };
+    // -------- Login
+    async function login(email, password) {
+        const data = await api('/users/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+        });
+        return data;
     }
 
     // -------- Venues
-    function listVenues() {
-        return get(STORAGE_KEYS.VENUES);
+    async function listVenues() {
+        const data = await api('/venues');
+        return Array.isArray(data) ? data : [];
     }
 
-    function getVenue(idVal) {
-        return byId(listVenues(), idVal);
+    async function getVenue(id) {
+        const data = await api(`/venues/${id}`);
+        return data.ok === false ? null : data;
     }
 
-    function createVenue(venue) {
-        const venues = listVenues();
-        const record = {
-            id: id('v'),
-            venueName: String(venue.venueName || '').trim(),
-            location: String(venue.location || '').trim(),
-            capacity: Number(venue.capacity),
-            status: venue.status || 'Active'
-        };
-        venues.push(record);
-        set(STORAGE_KEYS.VENUES, venues);
-        return { ok: true, record };
+    async function createVenue(venue) {
+        const data = await api('/venues', {
+            method: 'POST',
+            body: JSON.stringify(venue),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function updateVenue(idVal, patch) {
-        const venues = listVenues();
-        const idx = venues.findIndex((v) => v.id === idVal);
-        if (idx === -1) return { ok: false, error: 'Venue not found.' };
-        venues[idx] = { ...venues[idx], ...patch, capacity: patch.capacity != null ? Number(patch.capacity) : venues[idx].capacity };
-        set(STORAGE_KEYS.VENUES, venues);
-        return { ok: true, record: venues[idx] };
+    async function updateVenue(id, patch) {
+        const data = await api(`/venues/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(patch),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function deleteVenue(idVal) {
-        // Cascade delete events
-        const events = listEvents().filter((e) => e.venueId === idVal);
-        events.forEach((e) => deleteEvent(e.id));
-        set(STORAGE_KEYS.VENUES, removeById(listVenues(), idVal));
-        return { ok: true };
+    async function deleteVenue(id) {
+        const data = await api(`/venues/${id}`, { method: 'DELETE' });
+        return data.ok === false ? data : { ok: true };
     }
 
     // -------- Resources
-    function listResources() {
-        return get(STORAGE_KEYS.RESOURCES);
+    async function listResources() {
+        const data = await api('/resources');
+        return Array.isArray(data) ? data : [];
     }
 
-    function getResource(idVal) {
-        return byId(listResources(), idVal);
+    async function getResource(id) {
+        const data = await api(`/resources/${id}`);
+        return data.ok === false ? null : data;
     }
 
-    function createResource(resource) {
-        const rows = listResources();
-        const record = {
-            id: id('r'),
-            resourceName: String(resource.resourceName || '').trim(),
-            quantity: Number(resource.quantity)
-        };
-        rows.push(record);
-        set(STORAGE_KEYS.RESOURCES, rows);
-        return { ok: true, record };
+    async function createResource(resource) {
+        const data = await api('/resources', {
+            method: 'POST',
+            body: JSON.stringify(resource),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function updateResource(idVal, patch) {
-        const rows = listResources();
-        const idx = rows.findIndex((r) => r.id === idVal);
-        if (idx === -1) return { ok: false, error: 'Resource not found.' };
-        rows[idx] = { ...rows[idx], ...patch, quantity: patch.quantity != null ? Number(patch.quantity) : rows[idx].quantity };
-        set(STORAGE_KEYS.RESOURCES, rows);
-        return { ok: true, record: rows[idx] };
+    async function updateResource(id, patch) {
+        const data = await api(`/resources/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(patch),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function deleteResource(idVal) {
-        // Remove event resource allocations
-        set(STORAGE_KEYS.EVENT_RESOURCES, listEventResources().filter((er) => er.resourceId !== idVal));
-        set(STORAGE_KEYS.RESOURCES, removeById(listResources(), idVal));
-        return { ok: true };
+    async function deleteResource(id) {
+        const data = await api(`/resources/${id}`, { method: 'DELETE' });
+        return data.ok === false ? data : { ok: true };
     }
 
     // -------- Events
-    function listEvents() {
-        return get(STORAGE_KEYS.EVENTS);
+    async function listEvents() {
+        const data = await api('/events');
+        return Array.isArray(data) ? data : [];
     }
 
-    function getEvent(idVal) {
-        return byId(listEvents(), idVal);
+    async function getEvent(id) {
+        const data = await api(`/events/${id}`);
+        return data.ok === false ? null : data;
     }
 
-    function listEventsByOrganizer(organizerId) {
-        return listEvents().filter((e) => e.organizerId === organizerId);
+    async function listEventsByOrganizer(organizerId) {
+        const data = await api(`/events/organizer/${organizerId}`);
+        return Array.isArray(data) ? data : [];
     }
 
-    function eventRegistrationsCount(eventId) {
-        return listRegistrations().filter((r) => r.eventId === eventId).length;
+    async function eventRegistrationsCount(eventId) {
+        const data = await api(`/events/${eventId}/registrations-count`);
+        return data.count != null ? data.count : 0;
     }
 
-    function venueHasConflict({ venueId, eventDate, startTime, endTime, excludeEventId = null }) {
-        const sameDay = listEvents().filter((e) => e.venueId === venueId && e.eventDate === eventDate && e.id !== excludeEventId);
-        const s = String(startTime);
-        const e = String(endTime);
-        return sameDay.some((x) => !(e <= x.startTime || s >= x.endTime));
+    async function createEvent(event) {
+        const data = await api('/events', {
+            method: 'POST',
+            body: JSON.stringify(event),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function createEvent(event) {
-        const venues = listVenues();
-        const venue = venues.find((v) => v.id === event.venueId);
-        if (!venue) return { ok: false, error: 'Venue not found.' };
-
-        const capacity = Number(event.capacity);
-        if (capacity > Number(venue.capacity)) {
-            return { ok: false, error: 'Event capacity cannot exceed venue capacity.' };
-        }
-
-        if (venueHasConflict({ venueId: event.venueId, eventDate: event.eventDate, startTime: event.startTime, endTime: event.endTime })) {
-            return { ok: false, error: 'Venue is already booked for the selected time.' };
-        }
-
-        const rows = listEvents();
-        const record = {
-            id: id('e'),
-            title: String(event.title || '').trim(),
-            description: String(event.description || '').trim(),
-            imageUrl: String(event.imageUrl || '').trim(),
-            eventDate: event.eventDate,
-            startTime: event.startTime,
-            endTime: event.endTime,
-            capacity,
-            organizerId: event.organizerId,
-            venueId: event.venueId
-        };
-        rows.push(record);
-        set(STORAGE_KEYS.EVENTS, rows);
-        return { ok: true, record };
+    async function updateEvent(id, patch) {
+        const data = await api(`/events/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(patch),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function updateEvent(idVal, patch) {
-        const rows = listEvents();
-        const idx = rows.findIndex((e) => e.id === idVal);
-        if (idx === -1) return { ok: false, error: 'Event not found.' };
-
-        const next = { ...rows[idx], ...patch };
-        if (patch.imageUrl != null) {
-            next.imageUrl = String(patch.imageUrl || '').trim();
-        }
-
-        const venue = getVenue(next.venueId);
-        if (!venue) return { ok: false, error: 'Venue not found.' };
-
-        if (Number(next.capacity) > Number(venue.capacity)) {
-            return { ok: false, error: 'Event capacity cannot exceed venue capacity.' };
-        }
-
-        if (venueHasConflict({ venueId: next.venueId, eventDate: next.eventDate, startTime: next.startTime, endTime: next.endTime, excludeEventId: idVal })) {
-            return { ok: false, error: 'Venue is already booked for the selected time.' };
-        }
-
-        rows[idx] = { ...next, capacity: Number(next.capacity) };
-        set(STORAGE_KEYS.EVENTS, rows);
-        return { ok: true, record: rows[idx] };
-    }
-
-    function deleteEvent(idVal) {
-        // Cascade delete registrations/attendance, staff, resource allocations
-        const regs = listRegistrations().filter((r) => r.eventId === idVal);
-        regs.forEach((r) => deleteRegistration(r.id));
-        set(STORAGE_KEYS.EVENT_STAFF, listEventStaff().filter((a) => a.eventId !== idVal));
-        set(STORAGE_KEYS.EVENT_RESOURCES, listEventResources().filter((er) => er.eventId !== idVal));
-        set(STORAGE_KEYS.EVENTS, removeById(listEvents(), idVal));
-        return { ok: true };
+    async function deleteEvent(id) {
+        const data = await api(`/events/${id}`, { method: 'DELETE' });
+        return data.ok === false ? data : { ok: true };
     }
 
     // -------- Registrations
-    function listRegistrations() {
-        return get(STORAGE_KEYS.REGISTRATIONS);
+    async function listRegistrations() {
+        const data = await api('/registrations');
+        return Array.isArray(data) ? data : [];
     }
 
-    function getRegistration(idVal) {
-        return byId(listRegistrations(), idVal);
+    async function getRegistration(id) {
+        const regs = await listRegistrations();
+        return regs.find(r => r.id === id) || null;
     }
 
-    function listRegistrationsByUser(userId) {
-        return listRegistrations().filter((r) => r.userId === userId);
+    async function listRegistrationsByUser(userId) {
+        const data = await api(`/registrations/user/${userId}`);
+        return Array.isArray(data) ? data : [];
     }
 
-    function listRegistrationsByEvent(eventId) {
-        return listRegistrations().filter((r) => r.eventId === eventId);
+    async function listRegistrationsByEvent(eventId) {
+        const data = await api(`/registrations/event/${eventId}`);
+        return Array.isArray(data) ? data : [];
     }
 
-    function createRegistration({ userId, eventId }) {
-        const event = getEvent(eventId);
-        if (!event) return { ok: false, error: 'Event not found.' };
-
-        const user = getUser(userId);
-        if (!user) return { ok: false, error: 'User not found.' };
-
-        if (listRegistrations().some((r) => r.userId === userId && r.eventId === eventId)) {
-            return { ok: false, error: 'You are already registered for this event.' };
-        }
-
-        const count = eventRegistrationsCount(eventId);
-        if (count >= Number(event.capacity)) {
-            return { ok: false, error: 'House Full: event capacity reached.' };
-        }
-
-        const rows = listRegistrations();
-        const record = {
-            id: id('reg'),
-            userId,
-            eventId,
-            status: 'CONFIRMED',
-            registrationDate: nowIso()
-        };
-        rows.push(record);
-        set(STORAGE_KEYS.REGISTRATIONS, rows);
-
-        const attendanceRows = listAttendance();
-        attendanceRows.push({ id: id('a'), registrationId: record.id, status: 'PENDING', attendanceTime: null });
-        set(STORAGE_KEYS.ATTENDANCE, attendanceRows);
-
-        return { ok: true, record };
+    async function createRegistration({ userId, eventId }) {
+        const data = await api('/registrations', {
+            method: 'POST',
+            body: JSON.stringify({ userId, eventId }),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function deleteRegistration(idVal) {
-        const rows = removeById(listRegistrations(), idVal);
-        set(STORAGE_KEYS.REGISTRATIONS, rows);
-        set(STORAGE_KEYS.ATTENDANCE, listAttendance().filter((a) => a.registrationId !== idVal));
-        return { ok: true };
+    async function deleteRegistration(id) {
+        const data = await api(`/registrations/${id}`, { method: 'DELETE' });
+        return data.ok === false ? data : { ok: true };
     }
 
     // -------- Attendance
-    function listAttendance() {
-        return get(STORAGE_KEYS.ATTENDANCE);
+    async function listAttendance() {
+        const data = await api('/attendance');
+        return Array.isArray(data) ? data : [];
     }
 
-    function updateAttendanceByRegistration(regId, patch) {
-        const rows = listAttendance();
-        const idx = rows.findIndex((a) => a.registrationId === regId);
-        if (idx === -1) return { ok: false, error: 'Attendance record not found.' };
-        rows[idx] = { ...rows[idx], ...patch };
-        set(STORAGE_KEYS.ATTENDANCE, rows);
-        return { ok: true, record: rows[idx] };
+    async function updateAttendanceByRegistration(regId, patch) {
+        const data = await api(`/attendance/registration/${regId}`, {
+            method: 'PATCH',
+            body: JSON.stringify(patch),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
     // -------- Event Staff
-    function listEventStaff() {
-        return get(STORAGE_KEYS.EVENT_STAFF);
+    async function listEventStaff() {
+        const data = await api('/event-staff');
+        return Array.isArray(data) ? data : [];
     }
 
-    function createEventStaff(assignment) {
-        const rows = listEventStaff();
-        const record = {
-            id: id('as'),
-            eventId: assignment.eventId,
-            staffId: assignment.staffId,
-            role: String(assignment.role || '').trim(),
-            shiftStart: assignment.shiftStart,
-            shiftEnd: assignment.shiftEnd,
-            status: assignment.status || 'ASSIGNED'
-        };
-        rows.push(record);
-        set(STORAGE_KEYS.EVENT_STAFF, rows);
-        return { ok: true, record };
+    async function createEventStaff(assignment) {
+        const data = await api('/event-staff', {
+            method: 'POST',
+            body: JSON.stringify(assignment),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function updateEventStaff(idVal, patch) {
-        const rows = listEventStaff();
-        const idx = rows.findIndex((a) => a.id === idVal);
-        if (idx === -1) return { ok: false, error: 'Assignment not found.' };
-        rows[idx] = { ...rows[idx], ...patch };
-        set(STORAGE_KEYS.EVENT_STAFF, rows);
-        return { ok: true, record: rows[idx] };
+    async function updateEventStaff(id, patch) {
+        const data = await api(`/event-staff/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(patch),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function deleteEventStaff(idVal) {
-        set(STORAGE_KEYS.EVENT_STAFF, removeById(listEventStaff(), idVal));
-        return { ok: true };
+    async function deleteEventStaff(id) {
+        const data = await api(`/event-staff/${id}`, { method: 'DELETE' });
+        return data.ok === false ? data : { ok: true };
     }
 
     // -------- Event Resources
-    function listEventResources() {
-        return get(STORAGE_KEYS.EVENT_RESOURCES);
+    async function listEventResources() {
+        const data = await api('/event-resources');
+        return Array.isArray(data) ? data : [];
     }
 
-    function createEventResource(allocation) {
-        const rows = listEventResources();
-        const record = {
-            id: id('er'),
-            eventId: allocation.eventId,
-            resourceId: allocation.resourceId,
-            quantityUsed: Number(allocation.quantityUsed)
-        };
-        rows.push(record);
-        set(STORAGE_KEYS.EVENT_RESOURCES, rows);
-        return { ok: true, record };
+    async function createEventResource(allocation) {
+        const data = await api('/event-resources', {
+            method: 'POST',
+            body: JSON.stringify(allocation),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function updateEventResource(idVal, patch) {
-        const rows = listEventResources();
-        const idx = rows.findIndex((a) => a.id === idVal);
-        if (idx === -1) return { ok: false, error: 'Allocation not found.' };
-        rows[idx] = { ...rows[idx], ...patch, quantityUsed: patch.quantityUsed != null ? Number(patch.quantityUsed) : rows[idx].quantityUsed };
-        set(STORAGE_KEYS.EVENT_RESOURCES, rows);
-        return { ok: true, record: rows[idx] };
+    async function updateEventResource(id, patch) {
+        const data = await api(`/event-resources/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(patch),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
-    function deleteEventResource(idVal) {
-        set(STORAGE_KEYS.EVENT_RESOURCES, removeById(listEventResources(), idVal));
-        return { ok: true };
+    async function deleteEventResource(id) {
+        const data = await api(`/event-resources/${id}`, { method: 'DELETE' });
+        return data.ok === false ? data : { ok: true };
     }
 
     // -------- Notifications
-    function listNotifications(userId) {
-        const rows = get(STORAGE_KEYS.NOTIFICATIONS);
-        return userId ? rows.filter((n) => n.userId === userId) : rows;
+    async function listNotifications(userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const data = await api(`/notifications${query}`);
+        return Array.isArray(data) ? data : [];
     }
 
-    function addNotification(n) {
-        const rows = get(STORAGE_KEYS.NOTIFICATIONS);
-        const record = { id: id('n'), ...n, createdAt: n.createdAt || nowIso() };
-        rows.unshift(record);
-        set(STORAGE_KEYS.NOTIFICATIONS, rows);
-        return { ok: true, record };
-    }
-
-    // -------- Login helper
-    function login(email, password) {
-        const user = getUserByEmail(email);
-        if (!user) return { ok: false, error: 'Invalid credentials.' };
-        if (String(password) !== String(user.password)) return { ok: false, error: 'Invalid credentials.' };
-        return { ok: true, user: { id: user.id, name: user.name, email: user.email, role: user.role } };
+    async function addNotification(n) {
+        const data = await api('/notifications', {
+            method: 'POST',
+            body: JSON.stringify(n),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
     }
 
     window.EMCP = window.EMCP || {};

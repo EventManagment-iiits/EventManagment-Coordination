@@ -1,0 +1,2024 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/users/login": {
+      "post": {
+        "operationId": "UsersController_login",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": false,
+            "description": "Role: SUPER_USER | ADMIN | ORGANIZER | ATTENDEE | STAFF",
+            "schema": {}
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        },
+        "summary": "Login with email and password",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/signup": {
+      "post": {
+        "operationId": "UsersController_signup",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": false,
+            "description": "Role: SUPER_USER | ADMIN | ORGANIZER | ATTENDEE | STAFF",
+            "schema": {}
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created"
+          },
+          "409": {
+            "description": "Email already exists"
+          }
+        },
+        "summary": "Sign up a new user",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users": {
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "description": "Role of the requesting user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users"
+          },
+          "403": {
+            "description": "Access denied"
+          }
+        },
+        "summary": "List all users",
+        "tags": [
+          "Users"
+        ]
+      },
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created"
+          }
+        },
+        "summary": "Create a new user (admin)",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Get user by ID",
+        "tags": [
+          "Users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated"
+          }
+        },
+        "summary": "Update user",
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          }
+        },
+        "summary": "Delete user",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/venues": {
+      "get": {
+        "operationId": "VenuesController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of venues"
+          }
+        },
+        "summary": "List all venues",
+        "tags": [
+          "Venues"
+        ]
+      },
+      "post": {
+        "operationId": "VenuesController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVenueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Venue created"
+          }
+        },
+        "summary": "Create a new venue",
+        "tags": [
+          "Venues"
+        ]
+      }
+    },
+    "/api/venues/{id}": {
+      "get": {
+        "operationId": "VenuesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Venue details"
+          },
+          "404": {
+            "description": "Venue not found"
+          }
+        },
+        "summary": "Get venue by ID",
+        "tags": [
+          "Venues"
+        ]
+      },
+      "patch": {
+        "operationId": "VenuesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVenueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Venue updated"
+          }
+        },
+        "summary": "Update venue",
+        "tags": [
+          "Venues"
+        ]
+      },
+      "delete": {
+        "operationId": "VenuesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Venue deleted"
+          }
+        },
+        "summary": "Delete venue",
+        "tags": [
+          "Venues"
+        ]
+      }
+    },
+    "/api/resources": {
+      "get": {
+        "operationId": "ResourcesController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of resources"
+          }
+        },
+        "summary": "List all resources",
+        "tags": [
+          "Resources"
+        ]
+      },
+      "post": {
+        "operationId": "ResourcesController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateResourceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Resource created"
+          }
+        },
+        "summary": "Create a new resource",
+        "tags": [
+          "Resources"
+        ]
+      }
+    },
+    "/api/resources/{id}": {
+      "get": {
+        "operationId": "ResourcesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "summary": "Get resource by ID",
+        "tags": [
+          "Resources"
+        ]
+      },
+      "patch": {
+        "operationId": "ResourcesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateResourceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resource updated"
+          }
+        },
+        "summary": "Update resource",
+        "tags": [
+          "Resources"
+        ]
+      },
+      "delete": {
+        "operationId": "ResourcesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource deleted"
+          }
+        },
+        "summary": "Delete resource",
+        "tags": [
+          "Resources"
+        ]
+      }
+    },
+    "/api/events": {
+      "get": {
+        "operationId": "EventsController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of events"
+          }
+        },
+        "summary": "List all events",
+        "tags": [
+          "Events"
+        ]
+      },
+      "post": {
+        "operationId": "EventsController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event created"
+          },
+          "400": {
+            "description": "Validation / business rule error"
+          }
+        },
+        "summary": "Create a new event",
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/events/{id}": {
+      "get": {
+        "operationId": "EventsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "summary": "Get event by ID",
+        "tags": [
+          "Events"
+        ]
+      },
+      "patch": {
+        "operationId": "EventsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event updated"
+          }
+        },
+        "summary": "Update event",
+        "tags": [
+          "Events"
+        ]
+      },
+      "delete": {
+        "operationId": "EventsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event deleted"
+          }
+        },
+        "summary": "Delete event",
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/events/organizer/{organizerId}": {
+      "get": {
+        "operationId": "EventsController_findByOrganizer",
+        "parameters": [
+          {
+            "name": "organizerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get events by organizer ID",
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/events/{id}/registrations-count": {
+      "get": {
+        "operationId": "EventsController_registrationsCount",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get registration count for an event",
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/registrations": {
+      "get": {
+        "operationId": "RegistrationsController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List all registrations",
+        "tags": [
+          "Registrations"
+        ]
+      },
+      "post": {
+        "operationId": "RegistrationsController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRegistrationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Registration created"
+          },
+          "400": {
+            "description": "Already registered / capacity full"
+          }
+        },
+        "summary": "Register for an event",
+        "tags": [
+          "Registrations"
+        ]
+      }
+    },
+    "/api/registrations/event/{eventId}": {
+      "get": {
+        "operationId": "RegistrationsController_findByEvent",
+        "parameters": [
+          {
+            "name": "eventId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get registrations for an event",
+        "tags": [
+          "Registrations"
+        ]
+      }
+    },
+    "/api/registrations/user/{userId}": {
+      "get": {
+        "operationId": "RegistrationsController_findByUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get registrations for a user",
+        "tags": [
+          "Registrations"
+        ]
+      }
+    },
+    "/api/registrations/{id}": {
+      "delete": {
+        "operationId": "RegistrationsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registration cancelled"
+          }
+        },
+        "summary": "Cancel registration",
+        "tags": [
+          "Registrations"
+        ]
+      }
+    },
+    "/api/attendance": {
+      "get": {
+        "operationId": "AttendanceController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List all attendance records",
+        "tags": [
+          "Attendance"
+        ]
+      }
+    },
+    "/api/attendance/registration/{regId}": {
+      "patch": {
+        "operationId": "AttendanceController_updateByRegistration",
+        "parameters": [
+          {
+            "name": "regId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAttendanceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attendance updated"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "summary": "Update attendance by registration ID",
+        "tags": [
+          "Attendance"
+        ]
+      }
+    },
+    "/api/event-staff": {
+      "get": {
+        "operationId": "EventStaffController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List all staff assignments",
+        "tags": [
+          "Event Staff"
+        ]
+      },
+      "post": {
+        "operationId": "EventStaffController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventStaffDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Assignment created"
+          }
+        },
+        "summary": "Create staff assignment",
+        "tags": [
+          "Event Staff"
+        ]
+      }
+    },
+    "/api/event-staff/{id}": {
+      "patch": {
+        "operationId": "EventStaffController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventStaffDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assignment updated"
+          }
+        },
+        "summary": "Update staff assignment",
+        "tags": [
+          "Event Staff"
+        ]
+      },
+      "delete": {
+        "operationId": "EventStaffController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assignment deleted"
+          }
+        },
+        "summary": "Delete staff assignment",
+        "tags": [
+          "Event Staff"
+        ]
+      }
+    },
+    "/api/event-resources": {
+      "get": {
+        "operationId": "EventResourcesController_findAll",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List all resource allocations",
+        "tags": [
+          "Event Resources"
+        ]
+      },
+      "post": {
+        "operationId": "EventResourcesController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventResourceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Allocation created"
+          }
+        },
+        "summary": "Create resource allocation",
+        "tags": [
+          "Event Resources"
+        ]
+      }
+    },
+    "/api/event-resources/{id}": {
+      "patch": {
+        "operationId": "EventResourcesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventResourceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Allocation updated"
+          }
+        },
+        "summary": "Update resource allocation",
+        "tags": [
+          "Event Resources"
+        ]
+      },
+      "delete": {
+        "operationId": "EventResourcesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Allocation deleted"
+          }
+        },
+        "summary": "Delete resource allocation",
+        "tags": [
+          "Event Resources"
+        ]
+      }
+    },
+    "/api/notifications": {
+      "get": {
+        "operationId": "NotificationsController_findAll",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List notifications (optionally filter by userId)",
+        "tags": [
+          "Notifications"
+        ]
+      },
+      "post": {
+        "operationId": "NotificationsController_create",
+        "parameters": [
+          {
+            "name": "x-user-role",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-user-id",
+            "in": "header",
+            "required": false,
+            "description": "User ID for user-specific operations",
+            "schema": {}
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Notification created"
+          }
+        },
+        "summary": "Create a notification",
+        "tags": [
+          "Notifications"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "EMCP API",
+    "description": "Event Management & Coordination Platform REST API. Role is passed via the x-user-role header. User ID is passed via the x-user-id header for user-specific operations.",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@emcp.io"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@emcp.io"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          },
+          "role": {
+            "type": "string",
+            "example": "ORGANIZER",
+            "enum": [
+              "SUPER_USER",
+              "ADMIN",
+              "ORGANIZER",
+              "ATTENDEE",
+              "STAFF"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "example": "Active"
+          },
+          "orgDept": {
+            "type": "string",
+            "example": "CS Dept"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password",
+          "role"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "orgDept": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateVenueDto": {
+        "type": "object",
+        "properties": {
+          "venueName": {
+            "type": "string",
+            "example": "Grand Auditorium"
+          },
+          "location": {
+            "type": "string",
+            "example": "Main Campus, Building 4"
+          },
+          "capacity": {
+            "type": "number",
+            "example": 500
+          },
+          "status": {
+            "type": "string",
+            "example": "Active"
+          }
+        },
+        "required": [
+          "venueName",
+          "capacity"
+        ]
+      },
+      "UpdateVenueDto": {
+        "type": "object",
+        "properties": {
+          "venueName": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateResourceDto": {
+        "type": "object",
+        "properties": {
+          "resourceName": {
+            "type": "string",
+            "example": "Projector"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          }
+        },
+        "required": [
+          "resourceName",
+          "quantity"
+        ]
+      },
+      "UpdateResourceDto": {
+        "type": "object",
+        "properties": {
+          "resourceName": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateEventDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Tech Innovators Forum 2026"
+          },
+          "description": {
+            "type": "string",
+            "example": "A day of discovery and demos."
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": ""
+          },
+          "eventDate": {
+            "type": "string",
+            "example": "2026-05-15"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "09:00"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "12:00"
+          },
+          "capacity": {
+            "type": "number",
+            "example": 250
+          },
+          "organizerId": {
+            "type": "string",
+            "example": "u3"
+          },
+          "venueId": {
+            "type": "string",
+            "example": "v1"
+          }
+        },
+        "required": [
+          "title",
+          "eventDate",
+          "startTime",
+          "endTime",
+          "capacity",
+          "organizerId",
+          "venueId"
+        ]
+      },
+      "UpdateEventDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "eventDate": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "number"
+          },
+          "organizerId": {
+            "type": "string"
+          },
+          "venueId": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateRegistrationDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "u4"
+          },
+          "eventId": {
+            "type": "string",
+            "example": "e1"
+          }
+        },
+        "required": [
+          "userId",
+          "eventId"
+        ]
+      },
+      "UpdateAttendanceDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "PRESENT",
+            "enum": [
+              "PENDING",
+              "PRESENT",
+              "ABSENT"
+            ]
+          },
+          "attendanceTime": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "CreateEventStaffDto": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "example": "e1"
+          },
+          "staffId": {
+            "type": "string",
+            "example": "u5"
+          },
+          "role": {
+            "type": "string",
+            "example": "Main Stage Setup"
+          },
+          "shiftStart": {
+            "type": "string",
+            "example": "09:00"
+          },
+          "shiftEnd": {
+            "type": "string",
+            "example": "12:00"
+          },
+          "status": {
+            "type": "string",
+            "example": "ASSIGNED"
+          }
+        },
+        "required": [
+          "eventId",
+          "staffId",
+          "role",
+          "shiftStart",
+          "shiftEnd"
+        ]
+      },
+      "UpdateEventStaffDto": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string"
+          },
+          "staffId": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "shiftStart": {
+            "type": "string"
+          },
+          "shiftEnd": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateEventResourceDto": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "example": "e1"
+          },
+          "resourceId": {
+            "type": "string",
+            "example": "r1"
+          },
+          "quantityUsed": {
+            "type": "number",
+            "example": 2
+          }
+        },
+        "required": [
+          "eventId",
+          "resourceId",
+          "quantityUsed"
+        ]
+      },
+      "UpdateEventResourceDto": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          },
+          "quantityUsed": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateNotificationDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "u5"
+          },
+          "title": {
+            "type": "string",
+            "example": "New task assigned!"
+          },
+          "message": {
+            "type": "string",
+            "example": "You have been added to the support team."
+          },
+          "type": {
+            "type": "string",
+            "example": "info"
+          }
+        },
+        "required": [
+          "userId",
+          "title",
+          "message"
+        ]
+      }
+    }
+  }
+}

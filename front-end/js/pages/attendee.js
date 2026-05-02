@@ -26,14 +26,13 @@
         return d < today;
     }
 
-    function renderBrowse(filter = '') {
+    async function renderBrowse(filter = '') {
         const grid = document.getElementById('events-grid');
         const empty = document.getElementById('events-empty');
         const q = String(filter || '').trim().toLowerCase();
 
-        const venues = window.EMCP.repo.listVenues();
-        const events = window.EMCP.repo
-            .listEvents()
+        const venues = await window.EMCP.repo.listVenues();
+        const events = (await window.EMCP.repo.listEvents())
             .filter((e) => (activeTab === 'past' ? isPast(e) : !isPast(e)))
             .filter((e) => !q || e.title.toLowerCase().includes(q) || (e.description || '').toLowerCase().includes(q));
 
@@ -44,23 +43,23 @@
         }
         empty.classList.add('hidden');
 
-        const myRegs = new Set(window.EMCP.repo.listRegistrationsByUser(currentUser.id).map((r) => r.eventId));
+        const myRegs = new Set((await window.EMCP.repo.listRegistrationsByUser(currentUser.id)).map((r) => r.eventId));
 
-        grid.innerHTML = events
-            .map((e) => {
-                const venue = venues.find((v) => v.id === e.venueId);
-                const regCount = window.EMCP.repo.eventRegistrationsCount(e.id);
-                const full = regCount >= Number(e.capacity);
-                const registered = myRegs.has(e.id);
-                const thumbStyle = e.imageUrl ? ` style="background-image: url('${escapeHtml(e.imageUrl)}')"` : '';
+        const cards = [];
+        for (const e of events) {
+            const venue = venues.find((v) => v.id === e.venueId);
+            const regCount = await window.EMCP.repo.eventRegistrationsCount(e.id);
+            const full = regCount >= Number(e.capacity);
+            const registered = myRegs.has(e.id);
+            const thumbStyle = e.imageUrl ? ` style="background-image: url('${escapeHtml(e.imageUrl)}')"` : '';
 
-                const cta = registered
-                    ? `<button class="btn-secondary" data-action="details" data-id="${escapeHtml(e.id)}">View</button>
-                       <button class="btn-ghost danger" data-action="unregister" data-id="${escapeHtml(e.id)}">Unregister</button>`
-                    : `<button class="btn-secondary" data-action="details" data-id="${escapeHtml(e.id)}">Details</button>
-                       <button class="btn-primary" data-action="register" data-id="${escapeHtml(e.id)}" ${full ? 'disabled' : ''}>${full ? 'House Full' : 'Register'}</button>`;
+            const cta = registered
+                ? `<button class="btn-secondary" data-action="details" data-id="${escapeHtml(e.id)}">View</button>
+                   <button class="btn-ghost danger" data-action="unregister" data-id="${escapeHtml(e.id)}">Unregister</button>`
+                : `<button class="btn-secondary" data-action="details" data-id="${escapeHtml(e.id)}">Details</button>
+                   <button class="btn-primary" data-action="register" data-id="${escapeHtml(e.id)}" ${full ? 'disabled' : ''}>${full ? 'House Full' : 'Register'}</button>`;
 
-                return `
+            cards.push(`
                 <article class="event-card">
                     <div class="event-thumb"${thumbStyle} aria-hidden="true"></div>
                     <div class="event-body">
@@ -76,16 +75,16 @@
                         </div>
                         <div class="event-actions">${cta}</div>
                     </div>
-                </article>`;
-            })
-            .join('');
+                </article>`);
+        }
+        grid.innerHTML = cards.join('');
     }
 
-    function openEventDetails(eventId) {
-        const e = window.EMCP.repo.getEvent(eventId);
+    async function openEventDetails(eventId) {
+        const e = await window.EMCP.repo.getEvent(eventId);
         if (!e) return;
-        const venue = window.EMCP.repo.getVenue(e.venueId);
-        const regCount = window.EMCP.repo.eventRegistrationsCount(e.id);
+        const venue = await window.EMCP.repo.getVenue(e.venueId);
+        const regCount = await window.EMCP.repo.eventRegistrationsCount(e.id);
 
         const body = document.getElementById('modal-body');
         const title = document.getElementById('modal-title');
@@ -108,13 +107,13 @@
         document.getElementById('modal')?.classList?.remove('hidden');
     }
 
-    function renderMyRegistrations() {
+    async function renderMyRegistrations() {
         const tbody = document.getElementById('my-registrations-body');
         const empty = document.getElementById('my-registrations-empty');
 
-        const regs = window.EMCP.repo.listRegistrationsByUser(currentUser.id);
-        const events = window.EMCP.repo.listEvents();
-        const venues = window.EMCP.repo.listVenues();
+        const regs = await window.EMCP.repo.listRegistrationsByUser(currentUser.id);
+        const events = await window.EMCP.repo.listEvents();
+        const venues = await window.EMCP.repo.listVenues();
 
         if (regs.length === 0) {
             tbody.innerHTML = '';
@@ -142,11 +141,11 @@
             .join('');
     }
 
-    function unregister(eventId) {
-        const regs = window.EMCP.repo.listRegistrationsByUser(currentUser.id);
+    async function unregister(eventId) {
+        const regs = await window.EMCP.repo.listRegistrationsByUser(currentUser.id);
         const reg = regs.find((r) => r.eventId === eventId);
         if (!reg) return;
-        window.EMCP.repo.deleteRegistration(reg.id);
+        await window.EMCP.repo.deleteRegistration(reg.id);
         toast('Registration cancelled.', 'success');
     }
 
@@ -155,38 +154,38 @@
         const tabs = document.querySelectorAll('.tab[data-tab]');
 
         tabs.forEach((t) => {
-            t.addEventListener('click', () => {
+            t.addEventListener('click', async () => {
                 tabs.forEach((x) => x.classList.toggle('active', x === t));
                 activeTab = t.dataset.tab;
-                renderBrowse(search.value);
+                await renderBrowse(search.value);
             });
         });
 
-        search.addEventListener('input', () => renderBrowse(search.value));
+        search.addEventListener('input', async () => await renderBrowse(search.value));
 
-        document.body.addEventListener('click', (e) => {
+        document.body.addEventListener('click', async (e) => {
             const btn = e.target.closest('button[data-action]');
             if (!btn) return;
             const action = btn.dataset.action;
             const id = btn.dataset.id;
 
             if (action === 'details') {
-                openEventDetails(id);
+                await openEventDetails(id);
             }
 
             if (action === 'register') {
-                const res = window.EMCP.repo.createRegistration({ userId: currentUser.id, eventId: id });
+                const res = await window.EMCP.repo.createRegistration({ userId: currentUser.id, eventId: id });
                 if (!res.ok) return toast(res.error || 'Unable to register.', 'danger');
                 toast('Registered successfully.', 'success');
-                renderBrowse(search.value);
-                renderMyRegistrations();
+                await renderBrowse(search.value);
+                await renderMyRegistrations();
             }
 
             if (action === 'unregister') {
                 if (confirm('Unregister from this event?')) {
-                    unregister(id);
-                    renderBrowse(search.value);
-                    renderMyRegistrations();
+                    await unregister(id);
+                    await renderBrowse(search.value);
+                    await renderMyRegistrations();
                 }
             }
         });
@@ -201,7 +200,7 @@
         });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         currentUser = window.EMCP.guard.enforceRoleOrRedirect([ROLES.ATTENDEE]);
         if (!currentUser) return;
 
@@ -212,8 +211,8 @@
         setUserInfo();
         modal = initModal();
 
-        renderBrowse();
-        renderMyRegistrations();
+        await renderBrowse();
+        await renderMyRegistrations();
         bindActions();
 
         const params = new URLSearchParams(window.location.search);

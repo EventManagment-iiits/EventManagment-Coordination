@@ -21,14 +21,14 @@
     function bindDemoButtons() {
         const google = document.getElementById('google-btn');
         const ms = document.getElementById('microsoft-btn');
-        const msg = 'Social login is not available in the mock prototype.';
+        const msg = 'Social login is not available in the prototype.';
         google?.addEventListener('click', () => toast(msg, 'info'));
         ms?.addEventListener('click', () => toast(msg, 'info'));
 
         const forgot = document.getElementById('forgot-password');
         forgot?.addEventListener('click', (e) => {
             e.preventDefault();
-            toast('Password reset is not available in the mock prototype.', 'info');
+            toast('Password reset is not available in the prototype.', 'info');
         });
     }
 
@@ -38,7 +38,7 @@
 
         const summary = document.getElementById('login-summary');
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearFormErrors(form);
 
@@ -57,9 +57,9 @@
                 return;
             }
 
-            const res = window.EMCP.repo.login(fields.email, fields.password);
+            const res = await window.EMCP.repo.login(fields.email, fields.password);
             if (!res.ok) {
-                setFormErrors(form, { password: 'Invalid credentials. Try a demo account listed below.' }, summary);
+                setFormErrors(form, { password: res.error || 'Invalid credentials. Try a demo account listed below.' }, summary);
                 return;
             }
 

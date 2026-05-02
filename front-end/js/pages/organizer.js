@@ -19,17 +19,17 @@
         document.getElementById('org-avatar').textContent = initials || 'OR';
     }
 
-    function myEvents() {
+    async function myEvents() {
         return window.EMCP.repo.listEventsByOrganizer(currentUser.id);
     }
 
-    function renderEvents(filter = '') {
+    async function renderEvents(filter = '') {
         const tbody = document.getElementById('events-table-body');
         const empty = document.getElementById('events-empty');
         const q = String(filter || '').trim().toLowerCase();
 
-        const venues = window.EMCP.repo.listVenues();
-        const rows = myEvents().filter((e) => !q || e.title.toLowerCase().includes(q));
+        const venues = await window.EMCP.repo.listVenues();
+        const rows = (await myEvents()).filter((e) => !q || e.title.toLowerCase().includes(q));
 
         if (rows.length === 0) {
             tbody.innerHTML = '';
@@ -57,14 +57,14 @@
             .join('');
     }
 
-    function openEventModal(mode, eventId) {
-        const existing = eventId ? window.EMCP.repo.getEvent(eventId) : null;
+    async function openEventModal(mode, eventId) {
+        const existing = eventId ? await window.EMCP.repo.getEvent(eventId) : null;
         if (existing && existing.organizerId !== currentUser.id) {
-            toast('Access denied: cannot edit another organizer’s event.', 'danger');
+            toast('Access denied: cannot edit another organizer\'s event.', 'danger');
             return;
         }
 
-        const venues = window.EMCP.repo.listVenues().filter((v) => v.status === 'Active');
+        const venues = (await window.EMCP.repo.listVenues()).filter((v) => v.status === 'Active');
         const venueOptions = venues
             .map((v) => `<option value="${escapeHtml(v.id)}" ${existing?.venueId === v.id ? 'selected' : ''}>${escapeHtml(v.venueName)} (${escapeHtml(v.capacity)})</option>`)
             .join('');
@@ -127,7 +127,7 @@
         modal.open({
             title,
             formHtml,
-            onSubmit: (form) => {
+            onSubmit: async (form) => {
                 clearFormErrors(form);
 
                 const fields = {
@@ -162,7 +162,7 @@
                 }
 
                 const res = existing
-                    ? window.EMCP.repo.updateEvent(existing.id, {
+                    ? await window.EMCP.repo.updateEvent(existing.id, {
                           title: fields.title.trim(),
                           description: fields.description.trim(),
                           imageUrl: String(fields.imageUrl || '').trim(),
@@ -172,7 +172,7 @@
                           endTime: fields.endTime,
                           venueId: fields.venueId
                       })
-                    : window.EMCP.repo.createEvent({
+                    : await window.EMCP.repo.createEvent({
                           title: fields.title.trim(),
                           description: fields.description.trim(),
                           imageUrl: String(fields.imageUrl || '').trim(),
@@ -191,28 +191,28 @@
 
                 toast('Event saved.', 'success');
                 modal.close();
-                renderEvents(document.getElementById('global-search')?.value);
-                populateEventFilter();
+                await renderEvents(document.getElementById('global-search')?.value);
+                await populateEventFilter();
             }
         });
 
         document.getElementById('modal-cancel')?.addEventListener('click', () => modal.close());
     }
 
-    function populateEventFilter() {
+    async function populateEventFilter() {
         const select = document.getElementById('event-filter');
         if (!select) return;
-        const events = myEvents();
+        const events = await myEvents();
         select.innerHTML = events.map((e) => `<option value="${escapeHtml(e.id)}">${escapeHtml(e.title)}</option>`).join('');
-        renderRegistrationsFor(select.value);
-        select.addEventListener('change', () => renderRegistrationsFor(select.value));
+        await renderRegistrationsFor(select.value);
+        select.onchange = async () => await renderRegistrationsFor(select.value);
     }
 
-    function renderRegistrationsFor(eventId) {
+    async function renderRegistrationsFor(eventId) {
         const tbody = document.getElementById('org-registrations-body');
         const empty = document.getElementById('org-registrations-empty');
-        const regs = window.EMCP.repo.listRegistrationsByEvent(eventId);
-        const users = window.EMCP.repo.listUsers();
+        const regs = await window.EMCP.repo.listRegistrationsByEvent(eventId);
+        const users = await window.EMCP.repo.listUsers();
 
         if (!eventId || regs.length === 0) {
             tbody.innerHTML = '';
@@ -235,15 +235,14 @@
             .join('');
     }
 
-    function renderAssignments() {
-        // For organizer view, show assignments for their events.
+    async function renderAssignments() {
         const tbody = document.getElementById('staff-table-body');
         const empty = document.getElementById('staff-empty');
 
-        const myEventIds = new Set(myEvents().map((e) => e.id));
-        const assignments = window.EMCP.repo.listEventStaff().filter((a) => myEventIds.has(a.eventId));
-        const users = window.EMCP.repo.listUsers();
-        const events = window.EMCP.repo.listEvents();
+        const myEventIds = new Set((await myEvents()).map((e) => e.id));
+        const assignments = (await window.EMCP.repo.listEventStaff()).filter((a) => myEventIds.has(a.eventId));
+        const users = await window.EMCP.repo.listUsers();
+        const events = await window.EMCP.repo.listEvents();
 
         if (assignments.length === 0) {
             tbody.innerHTML = '';
@@ -271,16 +270,16 @@
             .join('');
     }
 
-    function openAssignmentModal(mode, assignmentId) {
-        const myEventIds = new Set(myEvents().map((e) => e.id));
-        const existing = assignmentId ? window.EMCP.repo.listEventStaff().find((a) => a.id === assignmentId) : null;
+    async function openAssignmentModal(mode, assignmentId) {
+        const myEventIds = new Set((await myEvents()).map((e) => e.id));
+        const existing = assignmentId ? (await window.EMCP.repo.listEventStaff()).find((a) => a.id === assignmentId) : null;
         if (existing && !myEventIds.has(existing.eventId)) {
             toast('Access denied.', 'danger');
             return;
         }
 
-        const events = myEvents();
-        const staff = window.EMCP.repo.listUsers().filter((u) => u.role === 'STAFF');
+        const events = await myEvents();
+        const staff = (await window.EMCP.repo.listUsers()).filter((u) => u.role === 'STAFF');
         const eventOptions = events.map((e) => `<option value="${escapeHtml(e.id)}" ${existing?.eventId === e.id ? 'selected' : ''}>${escapeHtml(e.title)}</option>`).join('');
         const staffOptions = staff.map((u) => `<option value="${escapeHtml(u.id)}" ${existing?.staffId === u.id ? 'selected' : ''}>${escapeHtml(u.name)}</option>`).join('');
 
@@ -335,7 +334,7 @@
         modal.open({
             title,
             formHtml,
-            onSubmit: (form) => {
+            onSubmit: async (form) => {
                 clearFormErrors(form);
                 const fields = {
                     eventId: form.eventId.value,
@@ -365,8 +364,8 @@
                 }
 
                 const res = existing
-                    ? window.EMCP.repo.updateEventStaff(existing.id, { ...fields, role: fields.role.trim() })
-                    : window.EMCP.repo.createEventStaff({ ...fields, role: fields.role.trim() });
+                    ? await window.EMCP.repo.updateEventStaff(existing.id, { ...fields, role: fields.role.trim() })
+                    : await window.EMCP.repo.createEventStaff({ ...fields, role: fields.role.trim() });
 
                 if (!res.ok) {
                     toast(res.error || 'Unable to save assignment.', 'danger');
@@ -375,21 +374,21 @@
 
                 toast('Assignment saved.', 'success');
                 modal.close();
-                renderAssignments();
+                await renderAssignments();
             }
         });
 
         document.getElementById('modal-cancel')?.addEventListener('click', () => modal.close());
     }
 
-    function renderEventResources() {
+    async function renderEventResources() {
         const tbody = document.getElementById('event-resources-body');
         const empty = document.getElementById('event-resources-empty');
 
-        const myEventIds = new Set(myEvents().map((e) => e.id));
-        const allocations = window.EMCP.repo.listEventResources().filter((er) => myEventIds.has(er.eventId));
-        const events = window.EMCP.repo.listEvents();
-        const resources = window.EMCP.repo.listResources();
+        const myEventIds = new Set((await myEvents()).map((e) => e.id));
+        const allocations = (await window.EMCP.repo.listEventResources()).filter((er) => myEventIds.has(er.eventId));
+        const events = await window.EMCP.repo.listEvents();
+        const resources = await window.EMCP.repo.listResources();
 
         if (allocations.length === 0) {
             tbody.innerHTML = '';
@@ -416,16 +415,16 @@
             .join('');
     }
 
-    function openResourceAllocationModal(mode, allocationId) {
-        const myEventIds = new Set(myEvents().map((e) => e.id));
-        const existing = allocationId ? window.EMCP.repo.listEventResources().find((er) => er.id === allocationId) : null;
+    async function openResourceAllocationModal(mode, allocationId) {
+        const myEventIds = new Set((await myEvents()).map((e) => e.id));
+        const existing = allocationId ? (await window.EMCP.repo.listEventResources()).find((er) => er.id === allocationId) : null;
         if (existing && !myEventIds.has(existing.eventId)) {
             toast('Access denied.', 'danger');
             return;
         }
 
-        const events = myEvents();
-        const resources = window.EMCP.repo.listResources();
+        const events = await myEvents();
+        const resources = await window.EMCP.repo.listResources();
         const eventOptions = events.map((e) => `<option value="${escapeHtml(e.id)}" ${existing?.eventId === e.id ? 'selected' : ''}>${escapeHtml(e.title)}</option>`).join('');
         const resOptions = resources.map((r) => `<option value="${escapeHtml(r.id)}" ${existing?.resourceId === r.id ? 'selected' : ''}>${escapeHtml(r.resourceName)} (${escapeHtml(r.quantity)})</option>`).join('');
 
@@ -457,7 +456,7 @@
         modal.open({
             title,
             formHtml,
-            onSubmit: (form) => {
+            onSubmit: async (form) => {
                 clearFormErrors(form);
 
                 const fields = {
@@ -472,7 +471,7 @@
                     quantityUsed: [positiveInt('Quantity used')]
                 });
 
-                const resource = window.EMCP.repo.getResource(fields.resourceId);
+                const resource = await window.EMCP.repo.getResource(fields.resourceId);
                 if (resource && Number(fields.quantityUsed) > Number(resource.quantity)) {
                     errors.quantityUsed = 'Quantity used cannot exceed available quantity.';
                 }
@@ -483,8 +482,8 @@
                 }
 
                 const res = existing
-                    ? window.EMCP.repo.updateEventResource(existing.id, { ...fields, quantityUsed: Number(fields.quantityUsed) })
-                    : window.EMCP.repo.createEventResource({ ...fields, quantityUsed: Number(fields.quantityUsed) });
+                    ? await window.EMCP.repo.updateEventResource(existing.id, { ...fields, quantityUsed: Number(fields.quantityUsed) })
+                    : await window.EMCP.repo.createEventResource({ ...fields, quantityUsed: Number(fields.quantityUsed) });
 
                 if (!res.ok) {
                     toast(res.error || 'Unable to save allocation.', 'danger');
@@ -493,7 +492,7 @@
 
                 toast('Resource allocation saved.', 'success');
                 modal.close();
-                renderEventResources();
+                await renderEventResources();
             }
         });
 
@@ -524,22 +523,22 @@
             toast('Select a module to create a record.', 'info');
         });
 
-        search.addEventListener('input', () => {
+        search.addEventListener('input', async () => {
             const module = activeModule();
-            if (module === 'events') renderEvents(search.value);
+            if (module === 'events') await renderEvents(search.value);
         });
 
         document.querySelectorAll('.nav-item[data-module]').forEach((btn) => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 updatePrimary();
                 search.value = '';
-                if (btn.dataset.module === 'registrations') populateEventFilter();
-                if (btn.dataset.module === 'staff') renderAssignments();
-                if (btn.dataset.module === 'resources') renderEventResources();
+                if (btn.dataset.module === 'registrations') await populateEventFilter();
+                if (btn.dataset.module === 'staff') await renderAssignments();
+                if (btn.dataset.module === 'resources') await renderEventResources();
             });
         });
 
-        document.body.addEventListener('click', (e) => {
+        document.body.addEventListener('click', async (e) => {
             const btn = e.target.closest('button[data-action]');
             if (!btn) return;
             const action = btn.dataset.action;
@@ -547,32 +546,32 @@
 
             if (action === 'edit-event') return openEventModal('edit', id);
             if (action === 'delete-event') {
-                const ev = window.EMCP.repo.getEvent(id);
+                const ev = await window.EMCP.repo.getEvent(id);
                 if (!ev) return;
                 if (ev.organizerId !== currentUser.id) return toast('Access denied.', 'danger');
                 if (confirm('Delete this event? This will remove dependent registrations and assignments.')) {
-                    window.EMCP.repo.deleteEvent(id);
+                    await window.EMCP.repo.deleteEvent(id);
                     toast('Event deleted.', 'success');
-                    renderEvents(search.value);
-                    populateEventFilter();
+                    await renderEvents(search.value);
+                    await populateEventFilter();
                 }
             }
 
             if (action === 'edit-assignment') return openAssignmentModal('edit', id);
             if (action === 'delete-assignment') {
                 if (confirm('Delete this assignment?')) {
-                    window.EMCP.repo.deleteEventStaff(id);
+                    await window.EMCP.repo.deleteEventStaff(id);
                     toast('Assignment deleted.', 'success');
-                    renderAssignments();
+                    await renderAssignments();
                 }
             }
 
             if (action === 'edit-allocation') return openResourceAllocationModal('edit', id);
             if (action === 'delete-allocation') {
                 if (confirm('Delete this allocation?')) {
-                    window.EMCP.repo.deleteEventResource(id);
+                    await window.EMCP.repo.deleteEventResource(id);
                     toast('Allocation deleted.', 'success');
-                    renderEventResources();
+                    await renderEventResources();
                 }
             }
         });
@@ -580,7 +579,7 @@
         updatePrimary();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         currentUser = window.EMCP.guard.enforceRoleOrRedirect([ROLES.ORGANIZER]);
         if (!currentUser) return;
 
@@ -590,10 +589,10 @@
         modal = initModal();
 
         setUserInfo();
-        renderEvents();
-        populateEventFilter();
-        renderAssignments();
-        renderEventResources();
+        await renderEvents();
+        await populateEventFilter();
+        await renderAssignments();
+        await renderEventResources();
         bindActions();
 
         const params = new URLSearchParams(window.location.search);

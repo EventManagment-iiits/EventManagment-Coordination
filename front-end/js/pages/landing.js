@@ -1,15 +1,15 @@
 (function () {
     'use strict';
 
-    const { qs, escapeHtml, formatDate, formatTime, toast } = window.EMCP.ui;
+    const { escapeHtml, formatDate, formatTime, toast } = window.EMCP.ui;
 
-    function renderUpcoming() {
+    async function renderUpcoming() {
         const grid = document.getElementById('landing-events');
         const empty = document.getElementById('landing-events-empty');
         if (!grid || !empty) return;
 
-        const events = window.EMCP.repo.listEvents();
-        const venues = window.EMCP.repo.listVenues();
+        const events = await window.EMCP.repo.listEvents();
+        const venues = await window.EMCP.repo.listVenues();
 
         const upcoming = events
             .slice()
@@ -57,7 +57,6 @@
             loginLink.href = window.EMCP.session.getDashboardForRole(user.role);
         }
 
-        // keep no broken links from landing
         document.querySelectorAll('a[data-auth="required"]').forEach((a) => {
             if (!user) {
                 a.addEventListener('click', (e) => {
@@ -69,8 +68,8 @@
         });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        renderUpcoming();
+    document.addEventListener('DOMContentLoaded', async () => {
+        await renderUpcoming();
         initHeaderLinks();
 
         const params = new URLSearchParams(window.location.search);

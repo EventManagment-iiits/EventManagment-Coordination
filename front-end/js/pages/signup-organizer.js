@@ -11,7 +11,7 @@
 
         const summary = document.getElementById('signup-summary');
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearFormErrors(form);
 
@@ -44,7 +44,7 @@
                 return;
             }
 
-            const create = window.EMCP.repo.createUser({
+            const create = await window.EMCP.repo.createUser({
                 name: fields.fullName,
                 email: fields.email,
                 password: fields.password,

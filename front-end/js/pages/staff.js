@@ -19,16 +19,17 @@
         document.getElementById('staff-avatar').textContent = initials || 'ST';
     }
 
-    function assignments() {
-        return window.EMCP.repo.listEventStaff().filter((a) => a.staffId === currentUser.id);
+    async function assignments() {
+        return (await window.EMCP.repo.listEventStaff()).filter((a) => a.staffId === currentUser.id);
     }
 
-    function renderStats() {
+    async function renderStats() {
         const el = document.getElementById('stats-row');
         if (!el) return;
-        const done = assignments().filter((a) => a.status === 'DONE').length;
-        const upcoming = assignments().length;
-        const pending = assignments().filter((a) => a.status === 'ASSIGNED').length;
+        const all = await assignments();
+        const done = all.filter((a) => a.status === 'DONE').length;
+        const upcoming = all.length;
+        const pending = all.filter((a) => a.status === 'ASSIGNED').length;
 
         el.innerHTML = [
             { label: 'Total Tasks Completed', value: done },
@@ -46,12 +47,12 @@
             .join('');
     }
 
-    function renderUpcoming() {
+    async function renderUpcoming() {
         const wrap = document.getElementById('upcoming-tasks');
         const empty = document.getElementById('upcoming-empty');
-        const events = window.EMCP.repo.listEvents();
+        const events = await window.EMCP.repo.listEvents();
 
-        const rows = assignments();
+        const rows = await assignments();
         if (rows.length === 0) {
             wrap.innerHTML = '';
             empty.classList.remove('hidden');
@@ -76,12 +77,12 @@
             .join('');
     }
 
-    function renderNotifications() {
+    async function renderNotifications() {
         const wrap = document.getElementById('recent-notifications');
         const list = document.getElementById('notifications-list');
         const empty = document.getElementById('notifications-empty');
 
-        const rows = window.EMCP.repo.listNotifications(currentUser.id);
+        const rows = await window.EMCP.repo.listNotifications(currentUser.id);
         const html = rows
             .slice(0, 3)
             .map(
@@ -101,13 +102,13 @@
         else empty.classList.add('hidden');
     }
 
-    function renderTasks(filter = '') {
+    async function renderTasks(filter = '') {
         const tbody = document.getElementById('tasks-table-body');
         const empty = document.getElementById('tasks-empty');
         const q = String(filter || '').trim().toLowerCase();
 
-        const events = window.EMCP.repo.listEvents();
-        const rows = assignments().filter((a) => {
+        const events = await window.EMCP.repo.listEvents();
+        const rows = (await assignments()).filter((a) => {
             const e = events.find((x) => x.id === a.eventId);
             return !q || (e?.title || '').toLowerCase().includes(q) || (a.role || '').toLowerCase().includes(q);
         });
@@ -136,8 +137,8 @@
             .join('');
     }
 
-    function openTaskModal(assignmentId) {
-        const a = assignments().find((x) => x.id === assignmentId);
+    async function openTaskModal(assignmentId) {
+        const a = (await assignments()).find((x) => x.id === assignmentId);
         if (!a) return;
 
         const formHtml = `
@@ -164,7 +165,7 @@
         modal.open({
             title: 'Update Task',
             formHtml,
-            onSubmit: (form) => {
+            onSubmit: async (form) => {
                 clearFormErrors(form);
                 const fields = { status: form.status.value, note: form.note.value };
                 const errors = validate(fields, {
@@ -176,10 +177,10 @@
                     return;
                 }
 
-                window.EMCP.repo.updateEventStaff(a.id, { status: fields.status });
+                await window.EMCP.repo.updateEventStaff(a.id, { status: fields.status });
 
                 if (fields.note && fields.note.trim()) {
-                    window.EMCP.repo.addNotification({
+                    await window.EMCP.repo.addNotification({
                         userId: currentUser.id,
                         title: 'Task updated',
                         message: fields.note.trim(),
@@ -189,10 +190,10 @@
 
                 toast('Task updated.', 'success');
                 modal.close();
-                renderStats();
-                renderUpcoming();
-                renderTasks(document.getElementById('global-search')?.value);
-                renderNotifications();
+                await renderStats();
+                await renderUpcoming();
+                await renderTasks(document.getElementById('global-search')?.value);
+                await renderNotifications();
             }
         });
 
@@ -201,16 +202,16 @@
 
     function bindActions() {
         const search = document.getElementById('global-search');
-        search.addEventListener('input', () => renderTasks(search.value));
+        search.addEventListener('input', async () => await renderTasks(search.value));
 
-        document.body.addEventListener('click', (e) => {
+        document.body.addEventListener('click', async (e) => {
             const btn = e.target.closest('button[data-action]');
             if (!btn) return;
-            if (btn.dataset.action === 'update-task') openTaskModal(btn.dataset.id);
+            if (btn.dataset.action === 'update-task') await openTaskModal(btn.dataset.id);
         });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         currentUser = window.EMCP.guard.enforceRoleOrRedirect([ROLES.STAFF]);
         if (!currentUser) return;
 
@@ -220,10 +221,10 @@
         modal = initModal();
 
         setUserInfo();
-        renderStats();
-        renderUpcoming();
-        renderNotifications();
-        renderTasks();
+        await renderStats();
+        await renderUpcoming();
+        await renderNotifications();
+        await renderTasks();
         bindActions();
 
         const params = new URLSearchParams(window.location.search);
