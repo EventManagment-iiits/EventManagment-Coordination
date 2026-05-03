@@ -7,7 +7,7 @@ import { CreateVenueDto } from './dto/create-venue.dto';
 import { UpdateVenueDto } from './dto/update-venue.dto';
 
 @ApiTags('Venues')
-@Controller('api/venues')
+@Controller('venues')
 export class VenuesController {
   constructor(private readonly venuesService: VenuesService) {}
 

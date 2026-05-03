@@ -7,7 +7,7 @@
     // All functions are async and return Promises.
     // ============================================================
 
-    const API_BASE = 'http://localhost:3001/api';
+    const API_BASE = 'http://localhost:3002/api';
 
     function getHeaders() {
         const headers = { 'Content-Type': 'application/json' };
@@ -321,6 +321,22 @@
         return { ok: true, record: data.record || data };
     }
 
+    // -------- Chat
+    async function listMessages(eventId) {
+        const query = eventId ? `?eventId=${encodeURIComponent(eventId)}` : '';
+        const data = await api(`/chat${query}`);
+        return Array.isArray(data) ? data : [];
+    }
+
+    async function sendMessage(eventId, content) {
+        const data = await api('/chat/send', {
+            method: 'POST',
+            body: JSON.stringify({ eventId, content }),
+        });
+        if (data.ok === false) return data;
+        return { ok: true, record: data.record || data };
+    }
+
     window.EMCP = window.EMCP || {};
     window.EMCP.repo = {
         login,
@@ -373,6 +389,9 @@
         deleteEventResource,
 
         listNotifications,
-        addNotification
+        addNotification,
+
+        listMessages,
+        sendMessage
     };
 })();

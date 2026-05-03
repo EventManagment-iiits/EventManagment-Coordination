@@ -8,7 +8,7 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { RegistrationsService } from '../registrations/registrations.service';
 
 @ApiTags('Events')
-@Controller('api/events')
+@Controller('events')
 export class EventsController {
   constructor(
     private readonly eventsService: EventsService,

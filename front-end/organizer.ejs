@@ -10,6 +10,7 @@
     <title>Organizer | EMCP</title>
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/chat.css" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -30,6 +31,7 @@
           </button>
           <button class="nav-item" data-module="staff">Volunteers</button>
           <button class="nav-item" data-module="resources">Resources</button>
+          <button class="nav-item" data-module="chat">Team Chat</button>
         </nav>
 
         <div class="user-profile">
@@ -184,6 +186,49 @@
               </div>
             </div>
           </div>
+
+          <div class="module hidden" data-module="chat">
+            <div class="chat-container">
+              <aside class="chat-sidebar">
+                <div class="chat-sidebar-header">Events</div>
+                <div class="chat-channels" id="chat-channels-list">
+                  <!-- Channels will be rendered here -->
+                </div>
+              </aside>
+              <main class="chat-main" id="chat-main-area">
+                <div class="chat-empty" id="chat-empty-state">
+                  <div class="chat-empty-icon">💬</div>
+                  <h3>Team Communication</h3>
+                  <p>Select an event to start chatting with your volunteers.</p>
+                </div>
+                
+                <div class="chat-content hidden" id="chat-active-content">
+                  <header class="chat-header">
+                    <div class="chat-header-left">
+                      <h2 id="active-channel-name">Event Name</h2>
+                      <span class="status-badge active">Live</span>
+                    </div>
+                    <div class="chat-header-actions">
+                      <button class="btn-secondary btn-pill" type="button">Search</button>
+                    </div>
+                  </header>
+                  <div class="chat-messages" id="chat-messages-display">
+                    <!-- Messages will be rendered here -->
+                  </div>
+                  <div class="chat-input-area">
+                    <form class="chat-form" id="chat-send-form">
+                      <div class="chat-input-wrapper">
+                        <input type="text" id="chat-input-field" class="chat-input" placeholder="Type a message..." autocomplete="off">
+                        <button type="submit" class="chat-btn-send">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </main>
+            </div>
+          </div>
         </section>
       </main>
     </div>
@@ -226,6 +271,7 @@
     <script src="js/core/guard.js"></script>
     <script src="js/core/validators.js"></script>
     <script src="js/core/ui.js"></script>
+    <script src="js/core/chat-app.js"></script>
     <script src="js/pages/organizer.js"></script>
   </body>
 </html>
