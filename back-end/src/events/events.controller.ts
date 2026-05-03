@@ -24,15 +24,6 @@ export class EventsController {
     return this.eventsService.findAll();
   }
 
-  @Get(':id')
-  @Roles(Role.ADMIN, Role.ORGANIZER, Role.ATTENDEE, Role.STAFF, Role.SUPER_USER)
-  @ApiOperation({ summary: 'Get event by ID' })
-  @ApiHeader({ name: 'x-user-role', required: true })
-  @ApiResponse({ status: 200 }) @ApiResponse({ status: 404 })
-  findOne(@Param('id') id: string) {
-    return this.eventsService.findOne(id);
-  }
-
   @Get('organizer/:organizerId')
   @Roles(Role.ORGANIZER, Role.SUPER_USER)
   @ApiOperation({ summary: 'Get events by organizer ID' })
@@ -49,6 +40,15 @@ export class EventsController {
   @ApiResponse({ status: 200 })
   registrationsCount(@Param('id') id: string) {
     return { count: this.registrationsService.countByEvent(id) };
+  }
+
+  @Get(':id')
+  @Roles(Role.ADMIN, Role.ORGANIZER, Role.ATTENDEE, Role.STAFF, Role.SUPER_USER)
+  @ApiOperation({ summary: 'Get event by ID' })
+  @ApiHeader({ name: 'x-user-role', required: true })
+  @ApiResponse({ status: 200 }) @ApiResponse({ status: 404 })
+  findOne(@Param('id') id: string) {
+    return this.eventsService.findOne(id);
   }
 
   @Post()
