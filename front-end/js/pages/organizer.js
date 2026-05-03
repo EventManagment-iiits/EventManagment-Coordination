@@ -41,9 +41,18 @@
         tbody.innerHTML = rows
             .map((e) => {
                 const venue = venues.find((v) => v.id === e.venueId);
+                const thumbImg = e.imageUrl 
+                    ? `<img src="${escapeHtml(e.imageUrl)}" alt="Event" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 12px; flex-shrink: 0;">` 
+                    : `<div style="width: 40px; height: 40px; background: var(--bg-muted, #f3f4f6); border-radius: 4px; margin-right: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #9ca3af;">No Img</div>`;
+                
                 return `
                 <tr>
-                    <td><strong>${escapeHtml(e.title)}</strong></td>
+                    <td>
+                        <div style="display: flex; align-items: center;">
+                            ${thumbImg}
+                            <strong>${escapeHtml(e.title)}</strong>
+                        </div>
+                    </td>
                     <td>${escapeHtml(formatDate(e.eventDate))}</td>
                     <td>${escapeHtml(formatTime(e.startTime))} - ${escapeHtml(formatTime(e.endTime))}</td>
                     <td>${escapeHtml(venue ? venue.venueName : '—')}</td>
