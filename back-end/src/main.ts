@@ -6,6 +6,9 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Global prefix for all routes
+  app.setGlobalPrefix('api');
+
   // CORS
   app.enableCors({
     origin: 'http://localhost:3000',
@@ -40,8 +43,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  await app.listen(3001);
-  console.log('🚀 EMCP Backend running at http://localhost:3001');
-  console.log('📚 Swagger docs at http://localhost:3001/api/docs');
+  await app.listen(3002);
+  console.log('🚀 EMCP Backend running at http://localhost:3002');
+  console.log('📚 Swagger docs at http://localhost:3002/api/docs');
 }
 bootstrap();

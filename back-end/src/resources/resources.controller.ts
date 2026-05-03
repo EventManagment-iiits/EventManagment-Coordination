@@ -7,7 +7,7 @@ import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
 
 @ApiTags('Resources')
-@Controller('api/resources')
+@Controller('resources')
 export class ResourcesController {
   constructor(private readonly resourcesService: ResourcesService) {}
 

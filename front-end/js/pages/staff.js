@@ -226,6 +226,7 @@
         await renderNotifications();
         await renderTasks();
         bindActions();
+        window.EMCP.chat.init(currentUser);
 
         const params = new URLSearchParams(window.location.search);
         const msg = params.get('msg');

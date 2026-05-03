@@ -7,7 +7,7 @@ import { CreateEventResourceDto } from './dto/create-event-resource.dto';
 import { UpdateEventResourceDto } from './dto/update-event-resource.dto';
 
 @ApiTags('Event Resources')
-@Controller('api/event-resources')
+@Controller('event-resources')
 export class EventResourcesController {
   constructor(private readonly eventResourcesService: EventResourcesService) {}
 

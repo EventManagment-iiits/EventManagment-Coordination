@@ -6,7 +6,7 @@ import { RegistrationsService } from './registrations.service';
 import { CreateRegistrationDto } from './dto/create-registration.dto';
 
 @ApiTags('Registrations')
-@Controller('api/registrations')
+@Controller('registrations')
 export class RegistrationsController {
   constructor(private readonly registrationsService: RegistrationsService) {}
 

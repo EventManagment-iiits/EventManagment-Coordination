@@ -7,7 +7,7 @@ import { CreateEventStaffDto } from './dto/create-event-staff.dto';
 import { UpdateEventStaffDto } from './dto/update-event-staff.dto';
 
 @ApiTags('Event Staff')
-@Controller('api/event-staff')
+@Controller('event-staff')
 export class EventStaffController {
   constructor(private readonly eventStaffService: EventStaffService) {}
 

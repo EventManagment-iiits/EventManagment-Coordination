@@ -10,6 +10,7 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { EventStaffModule } from './event-staff/event-staff.module';
 import { EventResourcesModule } from './event-resources/event-resources.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ChatModule } from './chat/chat.module';
 import { SeedService } from './seed/seed.service';
 
 @Module({
@@ -23,6 +24,7 @@ import { SeedService } from './seed/seed.service';
     EventStaffModule,
     EventResourcesModule,
     NotificationsModule,
+    ChatModule,
   ],
   providers: [
     {
