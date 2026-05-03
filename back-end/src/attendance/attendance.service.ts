@@ -28,7 +28,11 @@ export class AttendanceService {
   updateByRegistration(regId: string, dto: UpdateAttendanceDto): Attendance {
     const idx = this.attendance.findIndex((a) => a.registrationId === regId);
     if (idx === -1) throw new NotFoundException('Attendance record not found.');
-    this.attendance[idx] = { ...this.attendance[idx], ...dto };
+    const patch: Record<string, any> = {};
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined) patch[key] = value;
+    }
+    this.attendance[idx] = { ...this.attendance[idx], ...patch };
     return this.attendance[idx];
   }
 

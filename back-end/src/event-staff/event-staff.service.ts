@@ -38,7 +38,11 @@ export class EventStaffService {
   update(id: string, dto: UpdateEventStaffDto): EventStaff {
     const idx = this.assignments.findIndex((x) => x.id === id);
     if (idx === -1) throw new NotFoundException('Assignment not found.');
-    this.assignments[idx] = { ...this.assignments[idx], ...dto };
+    const patch: Record<string, any> = {};
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined) patch[key] = value;
+    }
+    this.assignments[idx] = { ...this.assignments[idx], ...patch };
     return this.assignments[idx];
   }
 

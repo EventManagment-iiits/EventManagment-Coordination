@@ -35,8 +35,12 @@ export class EventResourcesService {
   update(id: string, dto: UpdateEventResourceDto): EventResource {
     const idx = this.allocations.findIndex((x) => x.id === id);
     if (idx === -1) throw new NotFoundException('Allocation not found.');
-    this.allocations[idx] = { ...this.allocations[idx], ...dto };
-    if (dto.quantityUsed != null) this.allocations[idx].quantityUsed = Number(dto.quantityUsed);
+    const patch: Record<string, any> = {};
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined) patch[key] = value;
+    }
+    this.allocations[idx] = { ...this.allocations[idx], ...patch };
+    if (patch.quantityUsed != null) this.allocations[idx].quantityUsed = Number(patch.quantityUsed);
     return this.allocations[idx];
   }
 

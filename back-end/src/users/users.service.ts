@@ -67,7 +67,11 @@ export class UsersService {
       dto.email = email;
     }
 
-    this.users[idx] = { ...this.users[idx], ...dto };
+    const patch: Record<string, any> = {};
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined) patch[key] = value;
+    }
+    this.users[idx] = { ...this.users[idx], ...patch };
     const { password, ...rest } = this.users[idx];
     return rest;
   }

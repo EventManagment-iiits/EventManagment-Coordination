@@ -36,8 +36,12 @@ export class VenuesService {
   update(id: string, dto: UpdateVenueDto): Venue {
     const idx = this.venues.findIndex((v) => v.id === id);
     if (idx === -1) throw new NotFoundException('Venue not found.');
-    this.venues[idx] = { ...this.venues[idx], ...dto };
-    if (dto.capacity != null) this.venues[idx].capacity = Number(dto.capacity);
+    const patch: Record<string, any> = {};
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined) patch[key] = value;
+    }
+    this.venues[idx] = { ...this.venues[idx], ...patch };
+    if (patch.capacity != null) this.venues[idx].capacity = Number(patch.capacity);
     return this.venues[idx];
   }
 

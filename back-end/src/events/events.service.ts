@@ -63,7 +63,15 @@ export class EventsService {
     const idx = this.events.findIndex((x) => x.id === id);
     if (idx === -1) throw new NotFoundException('Event not found.');
 
-    const next = { ...this.events[idx], ...dto };
+    // Strip undefined values so optional DTO fields don't overwrite existing data
+    const patch: Record<string, any> = {};
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined) {
+        patch[key] = value;
+      }
+    }
+
+    const next = { ...this.events[idx], ...patch };
     const venue = this.venuesService.findOne(next.venueId);
     if (Number(next.capacity) > venue.capacity) {
       throw new BadRequestException('Event capacity cannot exceed venue capacity.');
@@ -71,7 +79,7 @@ export class EventsService {
     if (this.venueHasConflict(next.venueId, next.eventDate, next.startTime, next.endTime, id)) {
       throw new BadRequestException('Venue is already booked for the selected time.');
     }
-    if (dto.capacity != null) next.capacity = Number(dto.capacity);
+    if (patch.capacity != null) next.capacity = Number(patch.capacity);
     this.events[idx] = next;
     return this.events[idx];
   }

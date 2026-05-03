@@ -34,8 +34,12 @@ export class ResourcesService {
   update(id: string, dto: UpdateResourceDto): Resource {
     const idx = this.resources.findIndex((x) => x.id === id);
     if (idx === -1) throw new NotFoundException('Resource not found.');
-    this.resources[idx] = { ...this.resources[idx], ...dto };
-    if (dto.quantity != null) this.resources[idx].quantity = Number(dto.quantity);
+    const patch: Record<string, any> = {};
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined) patch[key] = value;
+    }
+    this.resources[idx] = { ...this.resources[idx], ...patch };
+    if (patch.quantity != null) this.resources[idx].quantity = Number(patch.quantity);
     return this.resources[idx];
   }
 
