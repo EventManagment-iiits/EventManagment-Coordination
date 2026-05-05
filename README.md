@@ -16,7 +16,6 @@
 - [Features by Role](#-features-by-role)
 - [Data Model](#-data-model)
 - [Demo Accounts](#-demo-accounts)
-- [Future Enhancements](#-future-enhancements)
 
 ---
 
@@ -298,15 +297,6 @@ The backend seeds demo data on startup. Use any of these accounts to explore:
 
 ---
 
-## 🔮 Future Enhancements
-
-- Integration with institutional databases for automatic student verification
-- JWT-based authentication with session management
-- Automated certificate generation for workshop participants
-- Mobile application with QR code-based attendance marking
-- Email notifications for registration confirmations
-- Post-event analytics and reporting dashboard
-- External database integration (PostgreSQL / MongoDB)
 
 ---
 
